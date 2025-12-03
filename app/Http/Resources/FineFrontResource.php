@@ -1,0 +1,44 @@
+<?php
+
+namespace App\Http\Resources;
+
+use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\JsonResource;
+
+class FineFrontResource extends JsonResource
+{
+    /**
+     * Transform the resource into an array.
+     *
+     * @return array<string, mixed>
+     */
+    public function toArray(Request $request): array
+    {
+        return [
+            'id' => $this->id,
+            'late_fee' => $this->late_fee,
+            'other_fee' => $this->other_fee,
+            'total_fee' => $this->total_fee,
+            'payment_status' => $this->payment_status,
+            'loan' => $this->whenLoaded('returnProduct', [
+                'id' => $this->returnProduct?->loan?->id,
+                'loan_code' => $this->returnProduct?->loan?->loan_code,
+                'loan_date' => Carbon::parse($this->returnProduct?->loan?->loan_date)->format('d M Y'),
+                'due_date' => Carbon::parse($this->returnProduct?->loan?->due_date)->format('d M Y'),
+            ]),
+            'return_product' => $this->whenLoaded('returnProduct', [
+                'return_product_code' => $this->returnProduct?->return_product_code,
+                'return_date' => Carbon::parse($this->returnProduct?->return_date)->format('d M Y'),
+            ]),
+            'product' => $this->whenLoaded('returnProduct', [
+                'id' => $this->returnProduct?->product?->id,
+                'title' => $this->returnProduct?->product?->title,
+                'slug' => $this->returnProduct?->product?->slug,
+            ]),
+            'user' => $this->whenLoaded('user', [
+                'id' => $this->user?->id,
+                'name' => $this->user?->name,
+            ])
+        ];
+    }
+}
