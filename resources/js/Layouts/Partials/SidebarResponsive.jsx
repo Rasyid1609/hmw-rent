@@ -32,7 +32,7 @@ export default function SidebarResponsive({ url, auth }) {
                     <>
                         {/* Nav Menu Dashboard */}
                         <div className="px-3 py-2 text-sm font-semibold text-foreground">Dashboard</div>
-                        <Navli
+                        <NavlinkResponsive
                             url={route('dashboard')}
                             active={url.startsWith('/dashboard')}
                             title="Dashboard"
@@ -60,7 +60,7 @@ export default function SidebarResponsive({ url, auth }) {
                         <NavlinkResponsive
                             url={route('admin.product-stock-reports.index')}
                             active={url.startsWith('/admin/product-stock-reports')}
-                            title="Laporan Stok Buku"
+                            title="Laporan Stok Barang"
                             icon={IconStack3}
                         />
                     </>

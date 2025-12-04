@@ -1,30 +1,32 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use Throwable;
+use Carbon\Carbon;
 use App\Models\Loans;
 use Inertia\Response;
 use App\Enums\MessageType;
 use App\Models\FineSetting;
 use Illuminate\Http\Request;
 use App\Models\ReturnProduct;
-use Illuminate\Support\Carbon;
+use App\Enums\ReturnProductStatus;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Enums\ReturnProductCondition;
 use Illuminate\Http\RedirectResponse;
 use App\Http\Resources\ReturnProductResource;
+use App\Http\Requests\Admin\ReturnProductRequest;
 
 class ReturnProductController extends Controller
 {
     public function index(): Response
     {
         $return_products = ReturnProduct::query()
-            ->select(['id', 'return_product_code', 'status', 'loans_id', 'user_id', 'product_id', 'return_date', 'created_at'])
+            ->select(['id', 'return_product_code', 'status', 'loan_id', 'user_id', 'product_id', 'return_date', 'created_at'])
             ->filter(request()->only(['search']))
             ->sorting(request()->only(['field', 'direction']))
-            ->with(['product', 'fine', 'loans', 'user', 'returnProductCheck'])
+            ->with(['product', 'fine', 'loan', 'user', 'returnProductCheck'])
             ->latest('created_at')
             ->paginate(request()->load ?? 10)
             ->withQueryString();
@@ -48,9 +50,9 @@ class ReturnProductController extends Controller
         ]);
     }
 
-    public function create(Loans $loans): Response|RedirectResponse
+    public function create(Loans $loan): Response|RedirectResponse
     {
-        if ($loans->returnProduct()->exists()){
+        if ($loan->returnProduct()->exists()){
             return to_route('admin.loans.index');
         }
 
@@ -63,9 +65,9 @@ class ReturnProductController extends Controller
                 'title' => 'Pengembalian Barang',
                 'subtitle' => 'Kembalikan Barang yang dipinjam disini. Klik kembalikan setelah selesai',
                 'method' => 'POST',
-                'action' => route('admin.return-products.store', $loans),
+                'action' => route('admin.return-products.store', $loan),
             ],
-            'loans' => $loans->load([
+            'loan' => $loan->load([
                 'user',
                 'product' => fn($query) => $query->with('publisher'),
             ]),
@@ -77,14 +79,14 @@ class ReturnProductController extends Controller
         ]);
     }
 
-    public function store(Loans $loans, ReturnProductRequest $request): RedirectResponse
+    public function store(Loans $loan, ReturnProductRequest $request): RedirectResponse
     {
         try {
             DB::beginTransaction();
-            $return_product = $loans->returnProduct()->create([
+            $return_product = $loan->returnProduct()->create([
                 'return_product_code' => str()->lower(str()->random(10)),
-                'product_id' => $loans->product_id,
-                'user_id' => $loans->user_id,
+                'product_id' => $loan->product_id,
+                'user_id' => $loan->user_id,
                 'return_date' => Carbon::today(),
             ]);
 
@@ -94,7 +96,7 @@ class ReturnProductController extends Controller
             ]);
 
             match($return_product_check->condition->value){
-                ReturnProductCondition::GOOD->value => $return_product->product->stock_loans_return(),
+                ReturnProductCondition::GOOD->value => $return_product->product->stock_loan_return(),
                 ReturnProductCondition::LOST->value => $return_product->product->stock_lost(),
                 ReturnProductCondition::DAMAGED->value => $return_product->product->stock_damaged(),
                 default => flashMessage('Kondisi barang tidak sesuai', 'error'),
@@ -197,7 +199,7 @@ class ReturnProductController extends Controller
             ]);
 
             match($return_product_check->condition->value){
-                ReturnProductCondition::GOOD->value => $returnProduct->product->stock_loans_return(),
+                ReturnProductCondition::GOOD->value => $returnProduct->product->stock_loan_return(),
                 ReturnProductCondition::LOST->value => $returnProduct->product->stock_lost(),
                 ReturnProductCondition::DAMAGED->value => $returnProduct->product->stock_damaged(),
                 default => flashMessage('Kondisi barang tidak sesuai', 'error'),

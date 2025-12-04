@@ -17,6 +17,7 @@ use App\Http\Controllers\Admin\RouteAccessController;
 use App\Http\Controllers\Admin\ProductStockController;
 use App\Http\Controllers\Admin\LoanStatisticController;
 use App\Http\Controllers\Admin\AssignPermissionController;
+use App\Http\Controllers\Admin\ProductStockReportController;
 
 
 Route::middleware(['auth', 'role:admin|operator'])->prefix('admin')->group(function () {
@@ -29,7 +30,7 @@ Route::middleware(['auth', 'role:admin|operator'])->prefix('admin')->group(funct
         Route::get('fine-reports', 'index')->name('fine-reports.index');
     });
 
-    Route::controller(ProductStockController::class)->group(function(){
+    Route::controller(ProductStockReportController::class)->group(function(){
         Route::get('product-stock-reports', 'index')->name('product-stock-reports.index');
         Route::get('product-stock-reports/edit/{stock}', 'edit')->name('product-stock-reports.edit');
         Route::put('product-stock-reports/edit/{stock}', 'update')->name('product-stock-reports.update');

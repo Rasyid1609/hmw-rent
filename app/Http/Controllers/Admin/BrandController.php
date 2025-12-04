@@ -29,8 +29,8 @@ class BrandController extends Controller
 
         return inertia('Admin/Brands/Index', [
             'page_settings' => [
-                'title' => 'Penerbit',
-                'subtitle' => 'Menampilkan semua data penerbit yang tersedia pada platform ini',
+                'title' => 'Brand',
+                'subtitle' => 'Menampilkan semua data brand yang tersedia pada platform ini',
             ],
             'brands' => BrandResource::collection($brands)->additional([
                 'meta' => [
@@ -49,8 +49,8 @@ class BrandController extends Controller
     {
         return inertia('Admin/Brands/Create', [
             'page_settings' => [
-                'title' => 'Tambah Penerbit',
-                'subtitle' => 'Buat penerbut baru disini. Klik simpan setelah selesai',
+                'title' => 'Tambah Brand',
+                'subtitle' => 'Buat brand baru disini. Klik simpan setelah selesai',
                 'method' => 'POST',
                 'action' => route('admin.brands.store'),
             ],
@@ -61,13 +61,13 @@ class BrandController extends Controller
     public function store(BrandRequest $request): RedirectResponse
     {
         try {
-            Brand::create([
+            Brands::create([
                 'name' => $name = $request->name,
                 'slug' => str()->lower(str()->slug($name). str()->random(4)),
                 'logo' => $this->upload_file($request, 'logo', 'brands')
             ]);
 
-            flashMessage(MessageType::CREATED->message('Penerbit'));
+            flashMessage(MessageType::CREATED->message('Brand'));
             return to_route('admin.brands.index');
         } catch(Throwable $err) {
             flashMessage(MessageType::ERROR->message(error: $err->getMessage()), 'error');
@@ -79,8 +79,8 @@ class BrandController extends Controller
     {
         return inertia('Admin/Brands/Edit', [
             'page_settings' => [
-                'title' => 'Edit Penerbit',
-                'subtitle' => 'Edit penerbit disini. Klik simpan setelah selesai',
+                'title' => 'Edit Brand',
+                'subtitle' => 'Edit brand disini. Klik simpan setelah selesai',
                 'method' => 'PUT',
                 'action' => route('admin.brands.update', $brands)
             ],
@@ -100,6 +100,20 @@ class BrandController extends Controller
             flashMessage(MessageType::UPDATED->message('Brand'));
             return to_route('admin.brands.index');
         } catch(Throwable $err) {
+            flashMessage(MessageType::ERROR->message(error: $err->getMessage()), 'error');
+            return to_route('admin.brands.index');
+        }
+    }
+
+    public function destroy(Brands $brand): RedirectResponse
+    {
+        try {
+            $this->delete_file($brand, 'cover');
+
+            $brand->delete();
+            flashMessage(MessageType::DELETED->message('Kategori'));
+            return to_route('admin.brands.index');
+        } catch (Throwable $err) {
             flashMessage(MessageType::ERROR->message(error: $err->getMessage()), 'error');
             return to_route('admin.brands.index');
         }

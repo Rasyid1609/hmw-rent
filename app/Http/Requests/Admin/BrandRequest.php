@@ -22,7 +22,25 @@ class BrandRequest extends FormRequest
     public function rules(): array
     {
         return [
-            
+            'name' => [
+                'required',
+                'min:3',
+                'max:255',
+                'string'
+            ],
+            'logo' => [
+                'nullable',
+                'mimes:png,jpg,jpeg,webp',
+                'max:2048'
+            ],
+        ];
+    }
+
+    public function attributes(): array
+    {
+        return [
+            'name' => 'Nama',
+            'logo' => 'Logo',
         ];
     }
 }

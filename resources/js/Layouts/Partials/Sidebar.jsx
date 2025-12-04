@@ -10,9 +10,12 @@ import { IconBrandProducthunt,
     IconDeviceMobile,
     IconKeyframe,
     IconLayoutKanban,
+    IconLogout,
     IconMoneybag,
     IconRoute,
-    IconSettingsExclamation, IconStack3, IconTags } from '@tabler/icons-react'
+    IconSettingsExclamation, IconStack3, IconTags,
+    IconUser,
+    IconVersions} from '@tabler/icons-react'
 import React from 'react'
 
 export default function Sidebar({url, auth}) {
@@ -79,7 +82,7 @@ export default function Sidebar({url, auth}) {
                     icon={IconDeviceMobile}
                 />
                 <NavLink
-                    url={route('admin.fine-settings.index')}
+                    url={route('admin.fine-settings.create')}
                     active={url.startsWith('/admin/fine-settings')}
                     title="Pengaturan Denda"
                     icon={IconSettingsExclamation}

@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests\Admin;
 
+use App\Enums\ReturnProductCondition;
+use Illuminate\Validation\Rules\Enum;
 use Illuminate\Foundation\Http\FormRequest;
 
 class ReturnProductRequest extends FormRequest
@@ -11,7 +13,7 @@ class ReturnProductRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +24,17 @@ class ReturnProductRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'condition' => [
+                'required',
+                new Enum(ReturnProductCondition::class),
+            ]
+        ];
+    }
+
+    public function attributes(): array
+    {
+        return [
+            'condition' => 'Kondisi',
         ];
     }
 }

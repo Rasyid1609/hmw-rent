@@ -10,6 +10,7 @@ import { Link, useForm } from '@inertiajs/react';
 import { IconArrowLeft, IconCreditCardPay } from '@tabler/icons-react';
 import { toast } from 'sonner';
 
+
 export default function Create(props) {
     const { data, setData, reset, post, processing, errors } = useForm({
         user: null,

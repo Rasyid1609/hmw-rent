@@ -11,7 +11,7 @@ class ProductRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,52 @@ class ProductRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'title' => [
+                'required',
+                'min:3',
+                'max:255',
+                'string',
+            ],
+            'description' => [
+                'required',
+                'min:3',
+                'max:255',
+                'string'
+            ],
+            'cover' => [
+                'nullable',
+                'mimes:png,jpg,jpeg,webp',
+                'max:4000',
+            ],
+            'price_prod' => [
+                'required',
+                'numeric',
+                'min:0'
+            ],
+            'price' => [
+                'required',
+                'numeric',
+                'min:0'
+            ],
+            'category_id' => [
+                'required',
+                'exists:categories,id'
+            ],
+            'brand_id' => [
+                'required',
+                'exists:brands,id'
+            ]
+        ];
+    }
+
+    public function attributes(): array
+    {
+        return [
+            'title' => 'Barang',
+            'description' => 'Deskripsi',
+            'cover' => 'Cover',
+            'category_id' => 'Kategori',
+            'brand_id' => 'Brands',
         ];
     }
 }

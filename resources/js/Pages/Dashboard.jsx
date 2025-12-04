@@ -122,7 +122,7 @@ export default function Dashboard(props) {
                             </div>
                             <Button variant="orange" asChild>
                                 {auth.role.some((role) => ['admin', 'operator'].includes(role)) ? (
-                                    <Link href={route('loans.index')}>
+                                    <Link href={route('admin.loans.index')}>
                                         Lihat Semua
                                         <IconArrowUpRight className="size-4" />
                                     </Link>
@@ -141,7 +141,7 @@ export default function Dashboard(props) {
                                 <TableRow>
                                     <TableHead>#</TableHead>
                                     <TableHead>Kode Peminjaman</TableHead>
-                                    <TableHead>Buku</TableHead>
+                                    <TableHead>Barang</TableHead>
                                     <TableHead>Member</TableHead>
                                 </TableRow>
                             </TableHeader>
@@ -167,7 +167,7 @@ export default function Dashboard(props) {
                             </div>
                             <Button variant="orange" asChild>
                                 {auth.role.some((role) => ['admin', 'operator'].includes(role)) ? (
-                                    <Link href={route('return-products.index')}>
+                                    <Link href={route('admin.return-products.index')}>
                                         Lihat Semua
                                         <IconArrowUpRight className="size-4" />
                                     </Link>
@@ -186,7 +186,7 @@ export default function Dashboard(props) {
                                 <TableRow>
                                     <TableHead>#</TableHead>
                                     <TableHead>Kode Pengembalian</TableHead>
-                                    <TableHead>Buku</TableHead>
+                                    <TableHead>Barang</TableHead>
                                     <TableHead>Member</TableHead>
                                 </TableRow>
                             </TableHeader>
