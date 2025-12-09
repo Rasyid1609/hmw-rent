@@ -20,15 +20,15 @@ class FineResource extends JsonResource
             'other_fee' => $this->other_fee,
             'total_fee' => $this->total_fee,
             'payment_status' => $this->payment_status,
-            'loan' => $this->whenLoaded('returnBook', [
-                'id' => $this->returnBook?->loan?->id,
-                'loan_code' => $this->returnBook?->loan?->loan_code,
-                'loan_date' => Carbon::parse($this->returnBook?->loan?->loan_date)->format('d M Y'),
-                'due_date' => Carbon::parse($this->returnBook?->loan?->due_date)->format('d M Y'),
+            'loan' => $this->whenLoaded('returnProduct', [
+                'id' => $this->returnProduct?->loan?->id,
+                'loan_code' => $this->returnProduct?->loan?->loan_code,
+                'loan_date' => Carbon::parse($this->returnProduct?->loan?->loan_date)->format('d M Y'),
+                'due_date' => Carbon::parse($this->returnProduct?->loan?->due_date)->format('d M Y'),
             ]),
-            'return_book' => $this->whenLoaded('returnBook', [
-                'return_book_code' => $this->returnBook?->return_book_code,
-                'return_date' => Carbon::parse($this->returnBook?->return_date)->format('d M Y'),
+            'return_product' => $this->whenLoaded('returnProduct', [
+                'return_product_code' => $this->returnProduct?->return_product_code,
+                'return_date' => Carbon::parse($this->returnProduct?->return_date)->format('d M Y'),
             ]),
             'user' => [
                 'id' => $this->user?->id,
