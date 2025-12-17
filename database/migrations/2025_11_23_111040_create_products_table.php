@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('title');
             $table->string('slug')->unique();
             $table->string('description');
+            $table->unsignedInteger('release_year');
             $table->unsignedInteger('price')->default(0);
             $table->string('status')->default(ProductStatus::AVAILABLE->value);
             $table->string('cover')->nullable();

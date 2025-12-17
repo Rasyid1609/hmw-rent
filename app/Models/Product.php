@@ -18,6 +18,7 @@ class Product extends Model
         'title',
         'slug',
         'description',
+        'release_year',
         'price_prod',
         'price',
         'cover',
@@ -60,6 +61,7 @@ class Product extends Model
                     'title',
                     'slug',
                     'description',
+                    'release_year',
                     'price',
                     'cover',
                     'category_id',
@@ -113,7 +115,7 @@ class Product extends Model
             ->get();
     }
 
-    public static function mostLoanBooks($limit = 5){
+    public static function mostLoanProduct($limit = 5){
         return self::query()
             ->select(['id', 'title'])
             ->withCount('loans')

@@ -22,7 +22,7 @@ class ProductController extends Controller
     public function index(): Response
     {
         $products = Product::query()
-        ->select(['id', 'prod_code', 'title', 'description', 'slug', 'status', 'price', 'category_id', 'brand_id', 'created_at'])
+        ->select(['id', 'prod_code', 'title', 'description', 'release_year', 'slug', 'status', 'price', 'category_id', 'brand_id', 'created_at'])
         ->filter(request()->only(['search']))
         ->sorting(request()->only(['field', 'direction']))
         ->with(['category','stock','brand'])
@@ -58,6 +58,7 @@ class ProductController extends Controller
                 'action' => route('admin.products.store'),
             ],
             'page_data' => [
+                'releaseYears' => range(2000, now()->year),
                 'categories' => Category::query()->select(['id', 'name'])->get()->map(fn($item) => [
                     'value' => $item->id,
                     'label' => $item->name,
@@ -75,11 +76,13 @@ class ProductController extends Controller
         try {
             Product::create([
                 'prod_code' => $this->productCode(
+                    $request->release_year,
                     $request->category_id
                 ),
                 'title' => $title = $request->title,
                 'slug' => str()->lower(str()->slug($title). str()->random(4)),
                 'description' => $request->description,
+                'release_year' => $request->release_year,
                 'status' => $request->total > 0 ? ProductStatus::AVAILABLE->value : ProductStatus::UNAVAILABLE->value,
                 'cover' => $this->upload_file($request, 'cover', 'products'),
                 'price' => $request->price,
@@ -107,6 +110,7 @@ class ProductController extends Controller
             'product' =>$product,
 
             'page_data' => [
+                'releaseYears' => range(2000, now()->year),
                 'categories' => Category::query()->select(['id', 'name'])->get()->map(fn($item) => [
                     'value' => $item->id,
                     'label' => $item->name,
@@ -124,12 +128,15 @@ class ProductController extends Controller
         try {
             $product->update([
                 'prod_code' => $this->productCode(
+                    $request->release_year,
                     $request->category_id
                 ),
                 'title' => $title = $request->title,
                 'slug' => $title !== $product->title ?  str()->lower(str()->slug($title). str()->random(4)) : $product->slug,
                 'status' => $request->total > 0 ? ProductStatus::AVAILABLE->value : ProductStatus::UNAVAILABLE->value,
                 'cover' => $this->update_file($request, $product, 'cover', 'products'),
+                'description' => $request->description,
+                'release_year' => $request->release_year,
                 'price' => $request->price,
                 'category_id' => $request->category_id,
                 'brand_id' => $request->brand_id,
@@ -157,13 +164,13 @@ class ProductController extends Controller
         }
     }
 
-    private function productCode(int $category_id): string
+    private function productCode(int $release_year, int $category_id): string
     {
         $category = Category::find($category_id);
-        $product_code_prefix = 'CA'. str()->slug($category->name). '.';
+        $product_code_prefix = 'CA'. $release_year. '.' . str()->slug($category->name). '.';
 
         $last_product = Product::query()
-            ->where('prod_code', 'like', $product_code_prefix . '%')
+            ->where('product_code', 'like', $product_code_prefix . '%')
             ->orderByRaw('CAST(SUBSTRING(product_code, -4) AS UNSIGNED) DESC')
             ->first();
 

@@ -34,6 +34,11 @@ class ProductRequest extends FormRequest
                 'max:255',
                 'string'
             ],
+            'release_year' => [
+                'required',
+                'numeric',
+                'integer'
+            ],
             'cover' => [
                 'nullable',
                 'mimes:png,jpg,jpeg,webp',
@@ -60,6 +65,7 @@ class ProductRequest extends FormRequest
         return [
             'title' => 'Barang',
             'description' => 'Deskripsi',
+            'release_year' => 'Tahun Pembuatan',
             'cover' => 'Cover',
             'category_id' => 'Kategori',
             'brand_id' => 'Brands',
