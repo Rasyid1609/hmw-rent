@@ -39,11 +39,6 @@ class ProductRequest extends FormRequest
                 'mimes:png,jpg,jpeg,webp',
                 'max:4000',
             ],
-            'price_prod' => [
-                'required',
-                'numeric',
-                'min:0'
-            ],
             'price' => [
                 'required',
                 'numeric',

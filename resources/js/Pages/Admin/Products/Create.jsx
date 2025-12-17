@@ -9,20 +9,21 @@ import { Textarea } from '@/Components/ui/textarea';
 import AppLayout from '@/Layouts/AppLayout';
 import { flashMessage } from '@/lib/utils';
 import { Link, useForm } from '@inertiajs/react';
-import { IconArrowLeft, IconBooks, IconDevices } from '@tabler/icons-react';
+import { IconArrowLeft, IconBooks } from '@tabler/icons-react';
 import { useRef } from 'react';
 import { toast } from 'sonner';
 
-export default function Edit(props) {
+export default function Create(props) {
     const fileInputCover = useRef(null);
 
     const { data, setData, reset, post, processing, errors } = useForm({
-        title: props.product.title ?? '',
-        description: props.product.description ?? '',
+        title: '',
+        description: '',
         cover: null,
-        price: props.product.price ?? 0,
-        category_id: props.product.category_id ?? null,
-        brand_id: props.product.brand_id ?? null,
+        price: 0,
+        category_id: null,
+        brand_id: null,
+        total: 0,
         _method: props.page_settings.method,
     });
 
@@ -51,7 +52,7 @@ export default function Edit(props) {
                 <HeaderTitle
                     title={props.page_settings.title}
                     subTitle={props.page_settings.subtitle}
-                    icon={IconDevices}
+                    icon={IconBooks}
                 />
                 <Button variant="orange" size="lg" asChild>
                     <Link href={route('admin.products.index')}>
@@ -64,7 +65,7 @@ export default function Edit(props) {
                 <CardContent className="p-6">
                     <form className="space-y-6" onSubmit={onHandleSubmit}>
                         <div className="grid w-full items-center gap-1.5">
-                            <Label htmlFor="title">Barang</Label>
+                            <Label htmlFor="title">Nama Barang</Label>
                             <Input
                                 name="title"
                                 id="title"
@@ -147,7 +148,7 @@ export default function Edit(props) {
                                     <SelectValue>
                                         {props.page_data.brands.find(
                                             (brand) => brand.value == data.brand_id,
-                                        )?.label ?? 'Pilih Penerbit'}
+                                        )?.label ?? 'Pilih Brand'}
                                     </SelectValue>
                                 </SelectTrigger>
                                 <SelectContent>
@@ -159,6 +160,20 @@ export default function Edit(props) {
                                 </SelectContent>
                             </Select>
                             {errors.brand_id && <InputError message={errors.brand_id} />}
+                        </div>
+
+                        <div className="grid w-full items-center gap-1.5">
+                            <Label htmlFor="total">Stock</Label>
+                            <Input
+                                name="total"
+                                id="total"
+                                type="number"
+                                placeholder="Masukkan total stok..."
+                                min="0"
+                                value={data.total}
+                                onChange={onHandleChange}
+                            />
+                            {errors.total && <InputError message={errors.total} />}
                         </div>
 
                         <div className="flex justify-end gap-2">
@@ -176,4 +191,4 @@ export default function Edit(props) {
     );
 }
 
-Edit.layout = (page) => <AppLayout children={page} title={page.props.page_settings.title} />;
+Create.layout = (page) => <AppLayout children={page} title={page.props.page_settings.title} />;

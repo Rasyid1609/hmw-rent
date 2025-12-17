@@ -3,11 +3,17 @@
 namespace App\Http\Controllers\Admin;
 
 use Throwable;
+use App\Hasfile;
+use Inertia\Response;
+use App\Models\Brands;
 use App\Models\Product;
 use App\Models\Category;
 use App\Enums\MessageType;
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use Illuminate\Http\RedirectResponse;
+use App\Http\Requests\Admin\ProductRequest;
+use App\Http\Resources\Admin\ProductResource;
+
+
 
 class ProductController extends Controller
 {
@@ -16,7 +22,7 @@ class ProductController extends Controller
     public function index(): Response
     {
         $products = Product::query()
-        ->select(['id', 'product_code', 'title', 'slug', 'status', 'price', 'category_id', 'publisher_id', 'created_at'])
+        ->select(['id', 'prod_code', 'title', 'description', 'slug', 'status', 'price', 'category_id', 'brand_id', 'created_at'])
         ->filter(request()->only(['search']))
         ->sorting(request()->only(['field', 'direction']))
         ->with(['category','stock','brand'])
@@ -26,7 +32,7 @@ class ProductController extends Controller
 
         return inertia('Admin/Products/Index', [
             'page_settings' => [
-                'title' => 'Buku',
+                'title' => 'Barang',
                 'subtitle' => 'Menampilkan semua data barang yang tersedia pada platform ini',
             ],
             'products' => ProductResource::collection($products)->additional([
@@ -52,13 +58,11 @@ class ProductController extends Controller
                 'action' => route('admin.products.store'),
             ],
             'page_data' => [
-                'publicationYears' => range(2000, now()->year),
-                'languages' => ProductLanguage::options(),
                 'categories' => Category::query()->select(['id', 'name'])->get()->map(fn($item) => [
                     'value' => $item->id,
                     'label' => $item->name,
                 ]),
-                'publishers' => Publisher::query()->select(['id', 'name'])->get()->map(fn($item) => [
+                'brands' => Brands::query()->select(['id', 'name'])->get()->map(fn($item) => [
                     'value' => $item->id,
                     'label' => $item->name,
                 ]),
@@ -70,20 +74,17 @@ class ProductController extends Controller
     {
         try {
             Product::create([
-                'product_code' => $this->productCode(
-                    $request->publication_year,
+                'prod_code' => $this->productCode(
                     $request->category_id
                 ),
                 'title' => $title = $request->title,
                 'slug' => str()->lower(str()->slug($title). str()->random(4)),
-
-                'synopsis' => $request->synopsis,
-                'number_of_pages' => $request->number_of_pages,
+                'description' => $request->description,
                 'status' => $request->total > 0 ? ProductStatus::AVAILABLE->value : ProductStatus::UNAVAILABLE->value,
                 'cover' => $this->upload_file($request, 'cover', 'products'),
                 'price' => $request->price,
                 'category_id' => $request->category_id,
-                'publisher_id' => $request->publisher_id,
+                'brand_id' => $request->brand_id,
             ]);
 
             flashMessage(MessageType::CREATED->message('Barang'));
@@ -106,13 +107,11 @@ class ProductController extends Controller
             'product' =>$product,
 
             'page_data' => [
-                'publicationYears' => range(2000, now()->year),
-                'languages' => ProductLanguage::options(),
                 'categories' => Category::query()->select(['id', 'name'])->get()->map(fn($item) => [
                     'value' => $item->id,
                     'label' => $item->name,
                 ]),
-                'publishers' => Publisher::query()->select(['id', 'name'])->get()->map(fn($item) => [
+                'brands' => Brands::query()->select(['id', 'name'])->get()->map(fn($item) => [
                     'value' => $item->id,
                     'label' => $item->name,
                 ]),
@@ -124,7 +123,7 @@ class ProductController extends Controller
     {
         try {
             $product->update([
-                'product_code' => $this->productCode(
+                'prod_code' => $this->productCode(
                     $request->category_id
                 ),
                 'title' => $title = $request->title,
@@ -133,10 +132,10 @@ class ProductController extends Controller
                 'cover' => $this->update_file($request, $product, 'cover', 'products'),
                 'price' => $request->price,
                 'category_id' => $request->category_id,
-                'publisher_id' => $request->publisher_id,
+                'brand_id' => $request->brand_id,
             ]);
 
-            flashMessage(MessageType::UPDATED->message('Buku'));
+            flashMessage(MessageType::UPDATED->message('Barang'));
             return to_route('admin.products.index');
         } catch(Throwable $err) {
             flashMessage(MessageType::ERROR->message(error: $err->getMessage()), 'error');
@@ -150,7 +149,7 @@ class ProductController extends Controller
             $this->delete_file($product, 'cover');
             $product->delete();
 
-            flashMessage(MessageType::DELETED->message('Buku'));
+            flashMessage(MessageType::DELETED->message('Barang'));
             return to_route('admin.products.index');
         } catch (Throwable $err) {
             flashMessage(MessageType::ERROR->message(error: $err->getMessage()), 'error');
@@ -158,13 +157,13 @@ class ProductController extends Controller
         }
     }
 
-    private function productCode(int $publication_year, int $category_id): string
+    private function productCode(int $category_id): string
     {
         $category = Category::find($category_id);
-        $product_code_prefix = 'CA'. $publication_year. '.' . str()->slug($category->name). '.';
+        $product_code_prefix = 'CA'. str()->slug($category->name). '.';
 
         $last_product = Product::query()
-            ->where('product_code', 'like', $product_code_prefix . '%')
+            ->where('prod_code', 'like', $product_code_prefix . '%')
             ->orderByRaw('CAST(SUBSTRING(product_code, -4) AS UNSIGNED) DESC')
             ->first();
 

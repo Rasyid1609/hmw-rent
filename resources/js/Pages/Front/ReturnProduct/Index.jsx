@@ -1,15 +1,5 @@
+import CardStat from '@/Components/CardStat';
 import HeaderTitle from '@/Components/HeaderTitle';
-import {
-    AlertDialog,
-    AlertDialogAction,
-    AlertDialogCancel,
-    AlertDialogContent,
-    AlertDialogDescription,
-    AlertDialogFooter,
-    AlertDialogHeader,
-    AlertDialogTrigger,
-} from '@/Components/ui/alert-dialog';
-import { Avatar, AvatarFallback, AvatarImage } from '@/Components/ui/avatar';
 import { Button } from '@/Components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader } from '@/Components/ui/card';
 import { Input } from '@/Components/ui/input';
@@ -18,15 +8,20 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/Components/ui/table';
 import { UseFilter } from '@/hooks/UseFilter';
 import AppLayout from '@/Layouts/AppLayout';
-import { flashMessage } from '@/lib/utils';
-import { Link, router } from '@inertiajs/react';
-import { AlertDialogTitle } from '@radix-ui/react-alert-dialog';
-import { IconArrowsDownUp, IconBooks, IconPencil, IconPlus, IconRefresh, IconTrash } from '@tabler/icons-react';
+import { formatToRupiah } from '@/lib/utils';
+import { Link } from '@inertiajs/react';
+import {
+    IconArrowsDownUp,
+    IconChecklist,
+    IconCreditCardRefund,
+    IconEye,
+    IconMoneybag,
+    IconRefresh,
+} from '@tabler/icons-react';
 import { useState } from 'react';
-import { toast } from 'sonner';
 
 export default function Index(props) {
-    const { data: products, meta } = props.products;
+    const { data: return_products, meta } = props.return_products;
     const [params, setParams] = useState(props.state);
 
     const onSortable = (field) => {
@@ -38,25 +33,52 @@ export default function Index(props) {
     };
 
     UseFilter({
-        route: route('admin.products.index'),
+        route: route('front.return-products.index'),
         values: params,
-        only: ['products'],
+        only: ['return_products'],
     });
 
     return (
-        <div className="flex w-full flex-col pb-32">
-            <div className="mb-8 flex flex-col items-start justify-between gap-y-4 lg:flex-row lg:items-center">
+        <div className="flex w-full flex-col space-y-4 pb-32">
+            <div className="flex flex-col items-start justify-between gap-y-4 lg:flex-row lg:items-center">
                 <HeaderTitle
                     title={props.page_settings.title}
                     subTitle={props.page_settings.subtitle}
-                    icon={IconBooks}
+                    icon={IconCreditCardRefund}
                 />
-                <Button variant="orange" size="lg" asChild>
-                    <Link href={route('admin.products.create')}>
-                        <IconPlus className="size-4" />
-                        Tambah
-                    </Link>
-                </Button>
+            </div>
+
+            <div className="grid gap-4 md:grid-cols-2 md:gap-8 lg:grid-cols-3">
+                <CardStat
+                    data={{
+                        title: 'Dikembalikan',
+                        icon: IconCreditCardRefund,
+                        background: 'text-white bg-gradient-to-r from-green-400 via-green-500 to-green-500',
+                        iconClassName: 'text-white',
+                    }}
+                >
+                    <div className="text-2xl font-bold">{props.page_data.returned}</div>
+                </CardStat>
+                <CardStat
+                    data={{
+                        title: 'Pengecekan',
+                        icon: IconChecklist,
+                        background: 'text-white bg-gradient-to-r from-blue-400 via-blue-500 to-blue-500',
+                        iconClassName: 'text-white',
+                    }}
+                >
+                    <div className="text-2xl font-bold">{props.page_data.checked}</div>
+                </CardStat>
+                <CardStat
+                    data={{
+                        title: 'Denda',
+                        icon: IconMoneybag,
+                        background: 'text-white bg-gradient-to-r from-red-400 via-red-500 to-red-500',
+                        iconClassName: 'text-white',
+                    }}
+                >
+                    <div className="text-2xl font-bold">{props.page_data.fine}</div>
+                </CardStat>
             </div>
 
             <Card>
@@ -106,9 +128,9 @@ export default function Index(props) {
                                     <Button
                                         variant="ghost"
                                         className="group inline-flex"
-                                        onClick={() => onSortable('product_code')}
+                                        onClick={() => onSortable('return_product_code')}
                                     >
-                                        Kode Barang
+                                        Kode Pengembalian
                                         <span className="ml-2 flex-none rounded text-muted-foreground">
                                             <IconArrowsDownUp className="size-4 text-muted-foreground" />
                                         </span>
@@ -118,7 +140,19 @@ export default function Index(props) {
                                     <Button
                                         variant="ghost"
                                         className="group inline-flex"
-                                        onClick={() => onSortable('title')}
+                                        onClick={() => onSortable('loan_code')}
+                                    >
+                                        Kode Peminjaman
+                                        <span className="ml-2 flex-none rounded text-muted-foreground">
+                                            <IconArrowsDownUp className="size-4 text-muted-foreground" />
+                                        </span>
+                                    </Button>
+                                </TableHead>
+                                <TableHead>
+                                    <Button
+                                        variant="ghost"
+                                        className="group inline-flex"
+                                        onClick={() => onSortable('product_id')}
                                     >
                                         Barang
                                         <span className="ml-2 flex-none rounded text-muted-foreground">
@@ -126,8 +160,6 @@ export default function Index(props) {
                                         </span>
                                     </Button>
                                 </TableHead>
-
-                                <TableHead>Stok</TableHead>
                                 <TableHead>
                                     <Button
                                         variant="ghost"
@@ -144,22 +176,9 @@ export default function Index(props) {
                                     <Button
                                         variant="ghost"
                                         className="group inline-flex"
-                                        onClick={() => onSortable('price')}
+                                        onClick={() => onSortable('loan_date')}
                                     >
-                                        Harga
-                                        <span className="ml-2 flex-none rounded text-muted-foreground">
-                                            <IconArrowsDownUp className="size-4 text-muted-foreground" />
-                                        </span>
-                                    </Button>
-                                </TableHead>
-                                <TableHead>Cover</TableHead>
-                                <TableHead>
-                                    <Button
-                                        variant="ghost"
-                                        className="group inline-flex"
-                                        onClick={() => onSortable('category_id')}
-                                    >
-                                        Kategori
+                                        Tanggal Peminjaman
                                         <span className="ml-2 flex-none rounded text-muted-foreground">
                                             <IconArrowsDownUp className="size-4 text-muted-foreground" />
                                         </span>
@@ -169,14 +188,28 @@ export default function Index(props) {
                                     <Button
                                         variant="ghost"
                                         className="group inline-flex"
-                                        onClick={() => onSortable('publisher_id')}
+                                        onClick={() => onSortable('due_date')}
                                     >
-                                        Brand
+                                        Batas Pengembalian
                                         <span className="ml-2 flex-none rounded text-muted-foreground">
                                             <IconArrowsDownUp className="size-4 text-muted-foreground" />
                                         </span>
                                     </Button>
                                 </TableHead>
+                                <TableHead>
+                                    <Button
+                                        variant="ghost"
+                                        className="group inline-flex"
+                                        onClick={() => onSortable('return_date')}
+                                    >
+                                        Tanggal Pengembalian
+                                        <span className="ml-2 flex-none rounded text-muted-foreground">
+                                            <IconArrowsDownUp className="size-4 text-muted-foreground" />
+                                        </span>
+                                    </Button>
+                                </TableHead>
+                                <TableHead>Denda</TableHead>
+                                <TableHead>Kondisi</TableHead>
                                 <TableHead>
                                     <Button
                                         variant="ghost"
@@ -193,66 +226,30 @@ export default function Index(props) {
                             </TableRow>
                         </TableHeader>
                         <TableBody>
-                            {products.map((product, index) => (
+                            {return_products.map((return_product, index) => (
                                 <TableRow key={index}>
                                     <TableCell>{index + 1 + (meta.current_page - 1) * meta.per_page}</TableCell>
-                                    <TableCell>{product.product_code}</TableCell>
-                                    <TableCell>{product.title}</TableCell>
-                                    <TableCell>{product.stock.total}</TableCell>
-                                    <TableCell>{product.status}</TableCell>
-                                    <TableCell>Rp. {product.price}</TableCell>
-                                    <TableCell>
-                                        <Avatar>
-                                            <AvatarImage src={product.cover} />
-                                            <AvatarFallback>{product.title.substring(0, 1)}</AvatarFallback>
-                                        </Avatar>
-                                    </TableCell>
-                                    <TableCell>{product.category.name}</TableCell>
-                                    <TableCell>{product.brand.name}</TableCell>
-                                    <TableCell>{product.created_at}</TableCell>
+                                    <TableCell>{return_product.return_product_code}</TableCell>
+                                    <TableCell>{return_product.loan.loan_code}</TableCell>
+                                    <TableCell>{return_product.product.title}</TableCell>
+                                    <TableCell>{return_product.status}</TableCell>
+                                    <TableCell>{return_product.loan.loan_date}</TableCell>
+                                    <TableCell>{return_product.loan.due_date}</TableCell>
+                                    <TableCell>{return_product.return_date}</TableCell>
+                                    <TableCell className="text-red-500">{formatToRupiah(return_product.fine)}</TableCell>
+                                    <TableCell>{return_product.return_product_check}</TableCell>
+                                    <TableCell>{return_product.created_at}</TableCell>
                                     <TableCell>
                                         <div className="flex items-center gap-x-1">
                                             <Button variant="blue" size="sm" asChild>
-                                                <Link href={route('admin.products.edit', [product])}>
-                                                    <IconPencil className="size-4" />
+                                                <Link
+                                                    href={route('front.return-products.show', [
+                                                        return_product.return_product_code,
+                                                    ])}
+                                                >
+                                                    <IconEye className="size-4" />
                                                 </Link>
                                             </Button>
-                                            <AlertDialog>
-                                                <AlertDialogTrigger asChild>
-                                                    <Button variant="red" size="sm">
-                                                        <IconTrash className="size-4" />
-                                                    </Button>
-                                                </AlertDialogTrigger>
-                                                <AlertDialogContent>
-                                                    <AlertDialogHeader>
-                                                        <AlertDialogTitle>
-                                                            Apakah anda benar-benar yakin?
-                                                        </AlertDialogTitle>
-                                                        <AlertDialogDescription>
-                                                            Tindakan ini tidak dapat dibatalkan. Tindakan ini akan
-                                                            menghapus data secara permanen dan menghapus data anda dari
-                                                            server kami
-                                                        </AlertDialogDescription>
-                                                    </AlertDialogHeader>
-                                                    <AlertDialogFooter>
-                                                        <AlertDialogCancel>Cancel</AlertDialogCancel>
-                                                        <AlertDialogAction
-                                                            onClick={() =>
-                                                                router.delete(route('admin.products.destroy', [product]), {
-                                                                    preserveScroll: true,
-                                                                    preserveState: true,
-                                                                    onSuccess: (success) => {
-                                                                        const flash = flashMessage(success);
-                                                                        if (flash) toast[flash.type](flash.message);
-                                                                    },
-                                                                })
-                                                            }
-                                                        >
-                                                            Continue
-                                                        </AlertDialogAction>
-                                                    </AlertDialogFooter>
-                                                </AlertDialogContent>
-                                            </AlertDialog>
                                         </div>
                                     </TableCell>
                                 </TableRow>
@@ -263,7 +260,7 @@ export default function Index(props) {
                 <CardFooter className="flex w-full flex-col items-center justify-between border-t py-2 lg:flex-row">
                     <p className="mb-2 text-sm text-muted-foreground">
                         Menampilkan <span className="font-medium text-orange-500">{meta.from ?? 0}</span> dari{' '}
-                        {meta.total} barang
+                        {meta.total} Pengembalian
                     </p>
                     <div className="overflow-x-auto">
                         {meta.has_pages && (

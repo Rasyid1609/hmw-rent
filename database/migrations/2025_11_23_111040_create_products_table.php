@@ -19,7 +19,6 @@ return new class extends Migration
             $table->string('slug')->unique();
             $table->string('description');
             $table->unsignedInteger('price')->default(0);
-            $table->unsignedInteger('price_prod')->default(0);
             $table->string('status')->default(ProductStatus::AVAILABLE->value);
             $table->string('cover')->nullable();
             $table->foreignId('category_id')->constrained('categories')->onDelete('cascade');

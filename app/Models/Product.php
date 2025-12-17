@@ -60,7 +60,6 @@ class Product extends Model
                     'title',
                     'slug',
                     'description',
-                    'price_prod',
                     'price',
                     'cover',
                     'category_id',
