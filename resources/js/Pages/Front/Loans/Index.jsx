@@ -98,7 +98,7 @@ export default function Index(props) {
                                     <Button
                                         variant="ghost"
                                         className="group inline-flex"
-                                        onClick={() => onSortable('book_id')}
+                                        onClick={() => onSortable('product_id')}
                                     >
                                         Buku
                                         <span className="ml-2 flex-none rounded text-muted-foreground">
@@ -150,7 +150,7 @@ export default function Index(props) {
                                 <TableRow key={index}>
                                     <TableCell>{index + 1 + (meta.current_page - 1) * meta.per_page}</TableCell>
                                     <TableCell>{loan.loan_code}</TableCell>
-                                    <TableCell>{loan.book.title}</TableCell>
+                                    <TableCell>{loan.product.title}</TableCell>
                                     <TableCell>{loan.loan_date}</TableCell>
                                     <TableCell>{loan.due_date}</TableCell>
                                     <TableCell>{loan.created_at}</TableCell>

@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Models\Loans;
+use App\Models\Loan;
 use App\Models\Brands;
 use App\Models\Stocks;
 use App\Models\Category;
@@ -10,6 +10,8 @@ use App\Enums\ProductStatus;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Product extends Model
 {
@@ -44,10 +46,10 @@ class Product extends Model
 
     public function loans(): HasMany
     {
-        return $this->hasMany(Loans::class);
+        return $this->hasMany(Loan::class);
     }
 
-    public function publisher(): BelongsTo
+    public function brand(): BelongsTo
     {
         return $this->belongsTo(Brands::class);
     }

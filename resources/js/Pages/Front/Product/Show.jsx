@@ -62,6 +62,10 @@ export default function Show(props) {
                             <h3 className="text-sm font-medium text-foreground">Kategori</h3>
                             <p className="mt-4 text-sm text-muted-foreground">{props.product.category.name}</p>
                         </div>
+                        <div>
+                            <h3 className="text-sm font-medium text-foreground">Harga</h3>
+                            <p className="mt-4 text-sm text-muted-foreground">Rp {props.product.price}</p>
+                        </div>
                     </div>
                 </div>
             </div>

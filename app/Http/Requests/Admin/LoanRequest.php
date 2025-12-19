@@ -26,7 +26,7 @@ class LoanRequest extends FormRequest
                 'required',
                 'exists:users,name'
             ],
-            'book' => [
+            'product' => [
                 'required',
                 'exists:products,title'
             ],

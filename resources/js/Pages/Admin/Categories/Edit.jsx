@@ -70,17 +70,7 @@ export default function Edit(props) {
                             />
                             {errors.name && <InputError message={errors.name} />}
                         </div>
-                        <div className="grid w-full items-center gap-1.5">
-                            <Label htmlFor="description">Deskripsi</Label>
-                            <Textarea
-                                name="description"
-                                id="description"
-                                placeholder="Masukkan deskripsi kategori..."
-                                value={data.description}
-                                onChange={onHandleChange}
-                            ></Textarea>
-                            {errors.description && <InputError message={errors.description} />}
-                        </div>
+
                         <div className="grid w-full items-center gap-1.5">
                             <Label htmlFor="cover">Cover</Label>
                             <Input

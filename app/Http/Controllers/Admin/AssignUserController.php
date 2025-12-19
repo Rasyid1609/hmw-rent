@@ -9,8 +9,8 @@ use App\Enums\MessageType;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
-use App\Http\Resources\AssignUserResource;
 use App\Http\Requests\Admin\AssignUserRequest;
+use App\Http\Resources\Admin\AssignUserResource;
 
 class AssignUserController extends Controller
 {

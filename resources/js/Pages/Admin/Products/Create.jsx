@@ -83,7 +83,7 @@ export default function Create(props) {
                             <Textarea
                                 name="description"
                                 id="description"
-                                placeholder="Masukkan Deskripsi Barang..."
+                                placeholder="Masukkan deskripsi..."
                                 value={data.description}
                                 onChange={onHandleChange}
                             ></Textarea>
@@ -91,27 +91,16 @@ export default function Create(props) {
                         </div>
 
                         <div className="grid w-full items-center gap-1.5">
-                            <Label htmlFor="release_year">Tahun Pembuatan</Label>
-                            <Select
-                                defaultValue={data.release_year}
-                                onValueChange={(value) => setData('release_year', value)}
-                            >
-                                <SelectTrigger>
-                                    <SelectValue>
-                                        {props.page_data.releaseYears.find(
-                                            (release_year) => release_year == data.release_year,
-                                        )?? "Pilih Tahun Pembuatan"}
-                                    </SelectValue>
-                                </SelectTrigger>
-                                <SelectContent>
-                                    {props.page_data.releaseYears.map((release_year, index) => (
-                                        <SelectItem key={index} value={release_year}>
-                                            {release_year}
-                                        </SelectItem>
-                                    ))}
-                                </SelectContent>
-                            </Select>
-                            {errors.release_year && <InputError message={errors.release_year} />}
+                            <Label htmlFor="release_year">Tahun Terbit</Label>
+                            <Input
+                                name="release_year"
+                                id="release_year"
+                                type="number"
+                                placeholder="Masukkan tahun terbit..."
+                                value={data.release_year}
+                                onChange={onHandleChange}
+                            />
+                            {errors.title && <InputError message={errors.title} />}
                         </div>
 
                         <div className="grid w-full items-center gap-1.5">
@@ -172,14 +161,14 @@ export default function Create(props) {
                                 <SelectTrigger>
                                     <SelectValue>
                                         {props.page_data.brands.find(
-                                            (brand) => brand.value == data.brand_id,
-                                        )?.label ?? 'Pilih Brand'}
+                                            (brands) => brands.value == data.brand_id,
+                                        )?.label ?? 'Pilih Brands'}
                                     </SelectValue>
                                 </SelectTrigger>
                                 <SelectContent>
-                                    {props.page_data.brands.map((brand, index) => (
-                                        <SelectItem key={index} value={brand.value}>
-                                            {brand.label}
+                                    {props.page_data.brands.map((brands, index) => (
+                                        <SelectItem key={index} value={brands.value}>
+                                            {brands.label}
                                         </SelectItem>
                                     ))}
                                 </SelectContent>

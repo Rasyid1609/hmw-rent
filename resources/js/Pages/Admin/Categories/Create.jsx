@@ -17,7 +17,6 @@ export default function Create(props) {
 
     const { data, setData, reset, post, processing, errors } = useForm({
         name: '',
-        description: '',
         cover: null,
         _method: props.page_settings.method,
     });
@@ -70,17 +69,7 @@ export default function Create(props) {
                             />
                             {errors.name && <InputError message={errors.name} />}
                         </div>
-                        <div className="grid w-full items-center gap-1.5">
-                            <Label htmlFor="description">Deskripsi</Label>
-                            <Textarea
-                                name="description"
-                                id="description"
-                                placeholder="Masukkan deskripsi kategori..."
-                                value={data.description}
-                                onChange={onHandleChange}
-                            ></Textarea>
-                            {errors.description && <InputError message={errors.description} />}
-                        </div>
+
                         <div className="grid w-full items-center gap-1.5">
                             <Label htmlFor="cover">Cover</Label>
                             <Input

@@ -20,12 +20,9 @@ return new class extends Migration
             $table->string('address');
             $table->date('start_date');
             $table->date('end_date');
-            $table->unsignedInteger('total_amount');
-            $table->unsignedBigInteger('duration');
             $table->string('payment_status')->default(RentPaymentStatus::PENDING->value);
             $table->enum('delivery_type', ['pickup', 'home_delivery'])->default('pickup');
             $table->foreignId('product_id')->constrained('products')->cascadeOnDelete();
-            $table->foreignId('store_id')->constrained('stores')->cascadeOnDelete();
             $table->timestamps();
         });
     }

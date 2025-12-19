@@ -62,7 +62,6 @@ class CategoryController extends Controller
             Category::create([
                 'name' => $name = $request->name,
                 'slug' => str()->lower(str()->slug($name). str()->random(4)),
-                'description' => $request->description,
                 'cover' => $this->upload_file($request, 'cover', 'categories')
             ]);
 
@@ -94,7 +93,6 @@ class CategoryController extends Controller
             $category->update([
                 'name' => $name = $request->name,
                 'slug' => $name !== $category->name ? str()->lower(str()->slug($name). str()->random(4)) : $category->slug,
-                'description' => $request->description,
                 'cover' => $this->update_file($request, $category,'cover', 'categories')
             ]);
 

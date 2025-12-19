@@ -48,10 +48,10 @@ export default function Index(props) {
                                 <TableRow key={index}>
                                     <TableCell>{index + 1 + (meta.current_page - 1) * meta.per_page}</TableCell>
                                     <TableCell>{fine.loan.loan_code}</TableCell>
-                                    <TableCell>{fine.return_book.return_book_code}</TableCell>
+                                    <TableCell>{fine.return_product.return_product_code}</TableCell>
                                     <TableCell>{fine.loan.loan_date}</TableCell>
                                     <TableCell>{fine.loan.due_date}</TableCell>
-                                    <TableCell>{fine.return_book.return_date}</TableCell>
+                                    <TableCell>{fine.return_product.return_date}</TableCell>
                                     <TableCell className="text-red-500">{formatToRupiah(fine.late_fee)}</TableCell>
                                     <TableCell className="text-red-500">{formatToRupiah(fine.other_fee)}</TableCell>
                                     <TableCell className="text-red-500">{formatToRupiah(fine.total_fee)}</TableCell>
@@ -62,8 +62,8 @@ export default function Index(props) {
                                         <div className="flex items-center gap-x-1">
                                             <Button varian="blue" size="sm" asChild>
                                                 <Link
-                                                    href={route('front.return-books.show', [
-                                                        fine.return_book.return_book_code,
+                                                    href={route('front.return-products.show', [
+                                                        fine.return_product.return_product_code,
                                                     ])}
                                                 >
                                                     <IconEye className="size-4" />

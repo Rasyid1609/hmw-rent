@@ -2,18 +2,18 @@
 
 namespace App\Models;
 
-use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Product;
 use App\Models\ReturnProduct;
+use Illuminate\Support\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Loans extends Model
+class Loan extends Model
 {
-   protected $fillable = [
+    protected $fillable = [
         'loan_code',
         'user_id',
         'product_id',
@@ -73,7 +73,7 @@ class Loans extends Model
             ->exists();
     }
 
-    public static function totalLoanProduct(): array
+    public static function totalLoanProducts(): array
     {
         return [
             'days' => self::whereDate('created_at', Carbon::now()->toDateString())->count(),

@@ -3,7 +3,7 @@ import HeaderTitle from '@/Components/HeaderTitle';
 import { Button } from '@/Components/ui/button';
 import AppLayout from '@/Layouts/AppLayout';
 import { Link } from '@inertiajs/react';
-import { IconBooks } from '@tabler/icons-react';
+import { IconBooks, IconDeviceMobile } from '@tabler/icons-react';
 
 export default function Index(props) {
     return (
@@ -12,7 +12,7 @@ export default function Index(props) {
                 <HeaderTitle
                     title={props.page_settings.title}
                     subTitle={props.page_settings.subtitle}
-                    icon={IconBooks}
+                    icon={IconDeviceMobile}
                 />
             </div>
             {props.categories.map((category, index) => (
@@ -24,8 +24,8 @@ export default function Index(props) {
                         </Button>
                     </div>
                     <div className="grid gap-4 border-b border-dashed border-muted py-10 md:gap-8 lg:grid-cols-4">
-                        {category.books.map((book, index) => (
-                            <BookCard key={index} item={book} />
+                        {category.products.map((product, index) => (
+                            <BookCard key={index} item={product} />
                         ))}
                     </div>
                 </div>

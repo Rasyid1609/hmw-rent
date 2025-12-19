@@ -2,7 +2,7 @@
 
 namespace App\Enums;
 
-enum ReturnBookCondition: string
+enum ReturnProductCondition: string
 {
     case GOOD = "Sesuai";
     case DAMAGED = "Rusak";

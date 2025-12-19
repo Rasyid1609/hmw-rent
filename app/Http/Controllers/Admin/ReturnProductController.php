@@ -3,20 +3,20 @@
 namespace App\Http\Controllers\Admin;
 
 use Throwable;
-use Carbon\Carbon;
-use App\Models\Loans;
+use App\Models\Loan;
 use Inertia\Response;
 use App\Enums\MessageType;
 use App\Models\FineSetting;
 use Illuminate\Http\Request;
 use App\Models\ReturnProduct;
-use App\Enums\ReturnProductStatus;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Enums\ReturnProductCondition;
 use Illuminate\Http\RedirectResponse;
-use App\Http\Resources\ReturnProductResource;
-use App\Http\Requests\Admin\ReturnProductRequest;
+use App\Http\Resources\Admin\ReturnProductResource;
+
+
 
 class ReturnProductController extends Controller
 {
@@ -50,7 +50,7 @@ class ReturnProductController extends Controller
         ]);
     }
 
-    public function create(Loans $loan): Response|RedirectResponse
+    public function create(Loan $loan): Response|RedirectResponse
     {
         if ($loan->returnProduct()->exists()){
             return to_route('admin.loans.index');
@@ -79,7 +79,7 @@ class ReturnProductController extends Controller
         ]);
     }
 
-    public function store(Loans $loan, ReturnProductRequest $request): RedirectResponse
+    public function store(Loan $loan, ReturnProductRequest $request): RedirectResponse
     {
         try {
             DB::beginTransaction();

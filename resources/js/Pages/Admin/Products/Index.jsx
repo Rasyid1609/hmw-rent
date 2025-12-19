@@ -127,6 +127,19 @@ export default function Index(props) {
                                     </Button>
                                 </TableHead>
 
+                                <TableHead>
+                                    <Button
+                                        variant="ghost"
+                                        className="group inline-flex"
+                                        onClick={() => onSortable('release_year')}
+                                    >
+                                        Tahun Terbit
+                                        <span className="ml-2 flex-none rounded text-muted-foreground">
+                                            <IconArrowsDownUp className="size-4 text-muted-foreground" />
+                                        </span>
+                                    </Button>
+                                </TableHead>
+
                                 <TableHead>Stok</TableHead>
                                 <TableHead>
                                     <Button
@@ -196,8 +209,9 @@ export default function Index(props) {
                             {products.map((product, index) => (
                                 <TableRow key={index}>
                                     <TableCell>{index + 1 + (meta.current_page - 1) * meta.per_page}</TableCell>
-                                    <TableCell>{product.product_code}</TableCell>
+                                    <TableCell>{product.prod_code}</TableCell>
                                     <TableCell>{product.title}</TableCell>
+                                    <TableCell>{product.release_year}</TableCell>
                                     <TableCell>{product.stock.total}</TableCell>
                                     <TableCell>{product.status}</TableCell>
                                     <TableCell>Rp. {product.price}</TableCell>

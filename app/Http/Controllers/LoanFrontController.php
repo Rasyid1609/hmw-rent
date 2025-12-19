@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Loans;
+use App\Models\Loan;
 use Inertia\Response;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Http\RedirectResponse;
 use App\Http\Resources\LoanFrontResource;
 use App\Http\Resources\LoanFrontSingleResource;
@@ -20,7 +21,7 @@ class LoanFrontController extends Controller
 
     public function index(): Response
     {
-        $loans = Loans::query()
+        $loans = Loan::query()
             ->select(['id', 'loan_code', 'user_id', 'product_id', 'loan_date','due_date', 'created_at'])
             ->where('user_id', auth()->user()->id)
             ->filter(request()->only(['search']))
@@ -61,7 +62,7 @@ class LoanFrontController extends Controller
 
     public function store(Product $product): RedirectResponse
     {
-        if (Loans::checkLoanProduct(auth()->user()->id, $product->id)){
+        if (Loan::checkLoanProduct(auth()->user()->id, $product->id)){
             flashMessage('Anda sudah meminjam barang ini, harap kembalikan barangnya terlebih dahuku', 'error');
             return  to_route('front.products.show', $product->slug);
         }
@@ -71,7 +72,7 @@ class LoanFrontController extends Controller
             return to_route('front.products.show');
         }
 
-        $loan = tap(Loans::create([
+        $loan = tap(Loan::create([
             'loan_code' => str()->lower(str()->random(10)),
                 'user_id' => auth()->user()->id,
                 'product_id' => $product->id,

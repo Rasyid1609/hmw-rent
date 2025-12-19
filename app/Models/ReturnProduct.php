@@ -30,7 +30,7 @@ class ReturnProduct extends Model
         'status' => ReturnProductStatus::class,
     ];
 
-    public function loan(): BelongsTo
+    public function loans(): BelongsTo
     {
         return $this->belongsTo(Loans::class);
     }

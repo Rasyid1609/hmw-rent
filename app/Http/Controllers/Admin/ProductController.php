@@ -9,11 +9,12 @@ use App\Models\Brands;
 use App\Models\Product;
 use App\Models\Category;
 use App\Enums\MessageType;
+use App\Enums\ProductStatus;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
 use App\Http\Requests\Admin\ProductRequest;
 use App\Http\Resources\Admin\ProductResource;
-
-
 
 class ProductController extends Controller
 {
@@ -58,7 +59,6 @@ class ProductController extends Controller
                 'action' => route('admin.products.store'),
             ],
             'page_data' => [
-                'releaseYears' => range(2000, now()->year),
                 'categories' => Category::query()->select(['id', 'name'])->get()->map(fn($item) => [
                     'value' => $item->id,
                     'label' => $item->name,
@@ -75,10 +75,7 @@ class ProductController extends Controller
     {
         try {
             Product::create([
-                'prod_code' => $this->productCode(
-                    $request->release_year,
-                    $request->category_id
-                ),
+                'prod_code' => $this->productCode(),
                 'title' => $title = $request->title,
                 'slug' => str()->lower(str()->slug($title). str()->random(4)),
                 'description' => $request->description,
@@ -96,6 +93,7 @@ class ProductController extends Controller
             flashMessage(MessageType::ERROR->message(error: $err->getMessage()), 'error');
             return to_route('admin.products.index');
         }
+
     }
 
     public function edit(Product $product): Response
@@ -110,7 +108,6 @@ class ProductController extends Controller
             'product' =>$product,
 
             'page_data' => [
-                'releaseYears' => range(2000, now()->year),
                 'categories' => Category::query()->select(['id', 'name'])->get()->map(fn($item) => [
                     'value' => $item->id,
                     'label' => $item->name,
@@ -127,10 +124,7 @@ class ProductController extends Controller
     {
         try {
             $product->update([
-                'prod_code' => $this->productCode(
-                    $request->release_year,
-                    $request->category_id
-                ),
+                'prod_code' => $this->productCode(),
                 'title' => $title = $request->title,
                 'slug' => $title !== $product->title ?  str()->lower(str()->slug($title). str()->random(4)) : $product->slug,
                 'status' => $request->total > 0 ? ProductStatus::AVAILABLE->value : ProductStatus::UNAVAILABLE->value,
@@ -164,24 +158,22 @@ class ProductController extends Controller
         }
     }
 
-    private function productCode(int $release_year, int $category_id): string
+    private function productCode(): string
     {
-        $category = Category::find($category_id);
-        $product_code_prefix = 'CA'. $release_year. '.' . str()->slug($category->name). '.';
+        $prefix = 'PRD-';
 
-        $last_product = Product::query()
-            ->where('product_code', 'like', $product_code_prefix . '%')
-            ->orderByRaw('CAST(SUBSTRING(product_code, -4) AS UNSIGNED) DESC')
+        $lastProduct = Product::query()
+            ->where('prod_code', 'like', $prefix . '%')
+            ->orderByRaw('CAST(SUBSTRING(prod_code, -4) AS UNSIGNED) DESC')
             ->first();
 
         $order = 1;
 
-        if ($last_product) {
-            $last_order = (int) substr($last_product->product_code, -4);
-            $order = $last_order + 1;
+        if ($lastProduct) {
+            $lastOrder = (int) substr($lastProduct->prod_code, -4);
+            $order = $lastOrder + 1;
         }
 
-        $ordering = str_pad($order, 4, '0', STR_PAD_LEFT);
-        return $product_code_prefix . $ordering;
+        return $prefix . str_pad($order, 4, '0', STR_PAD_LEFT);
     }
 }

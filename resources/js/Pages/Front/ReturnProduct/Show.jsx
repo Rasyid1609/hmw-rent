@@ -118,7 +118,7 @@ export default function Show(props) {
                 <Alert variant="destructive">
                     <AlertTitle>Informasi</AlertTitle>
                     <AlertDescription>
-                        Setelah melalui pengecekan, peminjaman buku anda terkena denda. Harap untuk melunasi pembayaran
+                        Setelah melalui pengecekan, peminjaman barang anda terkena denda. Harap untuk melunasi pembayaran
                         denda terlebih dahulu
                     </AlertDescription>
                 </Alert>

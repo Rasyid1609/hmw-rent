@@ -89,6 +89,30 @@ export default function Edit(props) {
                         </div>
 
                         <div className="grid w-full items-center gap-1.5">
+                            <Label htmlFor="release_year">Tahun Terbit</Label>
+                            <Select
+                                defaultValue={data.release_year}
+                                onValueChange={(value) => setData('release_year', value)}
+                            >
+                                <SelectTrigger>
+                                    <SelectValue>
+                                        {props.page_data.releaseYears.find(
+                                            (release_year) => release_year == data.release_year,
+                                        ) ?? 'Pilih tahun terbit'}
+                                    </SelectValue>
+                                </SelectTrigger>
+                                <SelectContent>
+                                    {props.page_data.releaseYears.map((release_year, index) => (
+                                        <SelectItem key={index} value={release_year}>
+                                            {release_year}
+                                        </SelectItem>
+                                    ))}
+                                </SelectContent>
+                            </Select>
+                            {errors.release_year && <InputError message={errors.release_year} />}
+                        </div>
+
+                        <div className="grid w-full items-center gap-1.5">
                             <Label htmlFor="cover">Cover</Label>
                             <Input
                                 name="cover"

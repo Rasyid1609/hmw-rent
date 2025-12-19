@@ -1,13 +1,12 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ProductController;
 use App\Http\Controllers\Admin\FineController;
 use App\Http\Controllers\Admin\LoanController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\BrandController;
-use App\Http\Controllers\ReturnProductController;
+use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\AssignUserController;
 use App\Http\Controllers\Admin\FineReportController;
@@ -16,6 +15,7 @@ use App\Http\Controllers\Admin\FineSettingController;
 use App\Http\Controllers\Admin\RouteAccessController;
 use App\Http\Controllers\Admin\ProductStockController;
 use App\Http\Controllers\Admin\LoanStatisticController;
+use App\Http\Controllers\Admin\ReturnProductController;
 use App\Http\Controllers\Admin\AssignPermissionController;
 use App\Http\Controllers\Admin\ProductStockReportController;
 
