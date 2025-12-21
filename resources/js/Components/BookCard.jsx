@@ -13,7 +13,7 @@ export default function BookCard({ item }) {
             </div>
             <div className="mt-4 flex items-center justify-between text-base font-medium leading-relaxed text-foreground">
                 <h3 className="line-clamp-1">
-                    <Link href={route('front.books.show', [item.slug])}>
+                    <Link href={route('front.products.show', [item.slug])}>
                         <span className="absolute inset-0" />
                         {item.title}
                     </Link>

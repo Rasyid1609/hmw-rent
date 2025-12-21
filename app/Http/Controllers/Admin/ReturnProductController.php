@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Enums\ReturnProductCondition;
 use Illuminate\Http\RedirectResponse;
+use App\Http\Requests\Admin\ReturnProductRequest;
 use App\Http\Resources\Admin\ReturnProductResource;
 
 
@@ -69,7 +70,7 @@ class ReturnProductController extends Controller
             ],
             'loan' => $loan->load([
                 'user',
-                'product' => fn($query) => $query->with('publisher'),
+                'product' => fn($query) => $query->with('brand'),
             ]),
             'date' => [
                 'return_date' => Carbon::now()->toDateString(),

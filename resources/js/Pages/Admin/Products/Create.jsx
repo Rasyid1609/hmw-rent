@@ -9,7 +9,7 @@ import { Textarea } from '@/Components/ui/textarea';
 import AppLayout from '@/Layouts/AppLayout';
 import { flashMessage } from '@/lib/utils';
 import { Link, useForm } from '@inertiajs/react';
-import { IconArrowLeft, IconBooks } from '@tabler/icons-react';
+import { IconArrowLeft, IconBooks, IconDeviceMobile } from '@tabler/icons-react';
 import { useRef } from 'react';
 import { toast } from 'sonner';
 
@@ -53,7 +53,7 @@ export default function Create(props) {
                 <HeaderTitle
                     title={props.page_settings.title}
                     subTitle={props.page_settings.subtitle}
-                    icon={IconBooks}
+                    icon={IconDeviceMobile}
                 />
                 <Button variant="orange" size="lg" asChild>
                     <Link href={route('admin.products.index')}>

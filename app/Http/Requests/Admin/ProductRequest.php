@@ -31,7 +31,7 @@ class ProductRequest extends FormRequest
             'description' => [
                 'required',
                 'min:3',
-                'max:255',
+                'max:10000',
                 'string'
             ],
             'release_year' => [

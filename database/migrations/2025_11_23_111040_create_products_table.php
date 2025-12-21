@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('prod_code');
             $table->string('title');
             $table->string('slug')->unique();
-            $table->string('description');
+            $table->text('description');
             $table->string('release_year');
             $table->unsignedInteger('price')->default(0);
             $table->string('status')->default(ProductStatus::AVAILABLE->value);

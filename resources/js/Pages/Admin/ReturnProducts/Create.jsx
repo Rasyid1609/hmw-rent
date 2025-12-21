@@ -94,11 +94,11 @@ export default function Create(props) {
                             <Input type="text" value={props.loan.product.title} disabled />
                         </div>
                         <div className="grid w-full items-center gap-1.5">
-                            <Label>Penulis</Label>
-                            <Input type="text" value={props.loan.product.author} disabled />
+                            <Label>Category</Label>
+                            <Input type="text" value={props.loan.product.category} disabled />
                         </div>
                         <div className="grid w-full items-center gap-1.5">
-                            <Label>Penerbit</Label>
+                            <Label>Brand</Label>
                             <Input type="text" value={props.loan.product.brand.name} disabled />
                         </div>
                     </CardContent>

@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use Inertia\Response;
+use App\Models\Product;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use App\Http\Resources\ProductFrontResource;
 use App\Http\Resources\CategoryFrontResource;
 
 class CategoryFrontController extends Controller

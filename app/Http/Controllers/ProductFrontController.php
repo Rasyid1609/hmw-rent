@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Inertia\Response;
+use App\Models\Product;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Http\Resources\CategoryFrontResource;
@@ -37,7 +38,7 @@ class ProductFrontController extends Controller
                 'title' => $product->title,
                 'subtitle' => "Menampilkan detail informasi barang {$product->title}",
             ],
-            'product' => new ProductFrontSingleResource($product->load(['category', 'publisher', 'stock'])),
+            'product' => new ProductFrontSingleResource($product->load(['category', 'brands', 'stock'])),
         ]);
     }
 }

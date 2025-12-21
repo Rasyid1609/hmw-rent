@@ -61,141 +61,144 @@ export default function Edit(props) {
                 </Button>
             </div>
             <Card>
-                <CardContent className="p-6">
-                    <form className="space-y-6" onSubmit={onHandleSubmit}>
-                        <div className="grid w-full items-center gap-1.5">
-                            <Label htmlFor="title">Barang</Label>
-                            <Input
-                                name="title"
-                                id="title"
-                                type="text"
-                                placeholder="Masukkan barang..."
-                                value={data.title}
-                                onChange={onHandleChange}
-                            />
-                            {errors.title && <InputError message={errors.title} />}
-                        </div>
+                            <CardContent className="p-6">
+                                <form className="space-y-6" onSubmit={onHandleSubmit}>
+                                    <div className="grid w-full items-center gap-1.5">
+                                        <Label htmlFor="title">Nama Barang</Label>
+                                        <Input
+                                            name="title"
+                                            id="title"
+                                            type="text"
+                                            placeholder="Masukkan barang..."
+                                            value={data.title}
+                                            onChange={onHandleChange}
+                                        />
+                                        {errors.title && <InputError message={errors.title} />}
+                                    </div>
 
-                        <div className="grid w-full items-center gap-1.5">
-                            <Label htmlFor="description">Deskripsi</Label>
-                            <Textarea
-                                name="description"
-                                id="description"
-                                placeholder="Masukkan Deskripsi Barang..."
-                                value={data.description}
-                                onChange={onHandleChange}
-                            ></Textarea>
-                            {errors.description && <InputError message={errors.description} />}
-                        </div>
+                                    <div className="grid w-full items-center gap-1.5">
+                                        <Label htmlFor="description">Deskripsi</Label>
+                                        <Textarea
+                                            name="description"
+                                            id="description"
+                                            placeholder="Masukkan deskripsi..."
+                                            value={data.description}
+                                            onChange={onHandleChange}
+                                        ></Textarea>
+                                        {errors.description && <InputError message={errors.description} />}
+                                    </div>
 
-                        <div className="grid w-full items-center gap-1.5">
-                            <Label htmlFor="release_year">Tahun Terbit</Label>
-                            <Select
-                                defaultValue={data.release_year}
-                                onValueChange={(value) => setData('release_year', value)}
-                            >
-                                <SelectTrigger>
-                                    <SelectValue>
-                                        {props.page_data.releaseYears.find(
-                                            (release_year) => release_year == data.release_year,
-                                        ) ?? 'Pilih tahun terbit'}
-                                    </SelectValue>
-                                </SelectTrigger>
-                                <SelectContent>
-                                    {props.page_data.releaseYears.map((release_year, index) => (
-                                        <SelectItem key={index} value={release_year}>
-                                            {release_year}
-                                        </SelectItem>
-                                    ))}
-                                </SelectContent>
-                            </Select>
-                            {errors.release_year && <InputError message={errors.release_year} />}
-                        </div>
+                                    <div className="grid w-full items-center gap-1.5">
+                                        <Label htmlFor="release_year">Tahun Terbit</Label>
+                                        <Input
+                                            name="release_year"
+                                            id="release_year"
+                                            type="number"
+                                            placeholder="Masukkan tahun terbit..."
+                                            value={data.release_year}
+                                            onChange={onHandleChange}
+                                        />
+                                        {errors.title && <InputError message={errors.title} />}
+                                    </div>
 
-                        <div className="grid w-full items-center gap-1.5">
-                            <Label htmlFor="cover">Cover</Label>
-                            <Input
-                                name="cover"
-                                id="cover"
-                                type="file"
-                                onChange={(e) => setData(e.target.name, e.target.files[0])}
-                                ref={fileInputCover}
-                            />
-                            {errors.cover && <InputError message={errors.cover} />}
-                        </div>
+                                    <div className="grid w-full items-center gap-1.5">
+                                        <Label htmlFor="cover">Cover</Label>
+                                        <Input
+                                            name="cover"
+                                            id="cover"
+                                            type="file"
+                                            onChange={(e) => setData(e.target.name, e.target.files[0])}
+                                            ref={fileInputCover}
+                                        />
+                                        {errors.cover && <InputError message={errors.cover} />}
+                                    </div>
 
-                        <div className="grid w-full items-center gap-1.5">
-                            <Label htmlFor="price">Harga</Label>
-                            <Input
-                                name="price"
-                                id="price"
-                                type="number"
-                                placeholder="Masukkan harga..."
-                                value={data.price}
-                                onChange={onHandleChange}
-                            />
-                            {errors.price && <InputError message={errors.price} />}
-                        </div>
+                                    <div className="grid w-full items-center gap-1.5">
+                                        <Label htmlFor="price">Harga</Label>
+                                        <Input
+                                            name="price"
+                                            id="price"
+                                            type="number"
+                                            placeholder="Masukkan harga..."
+                                            value={data.price}
+                                            onChange={onHandleChange}
+                                        />
+                                        {errors.price && <InputError message={errors.price} />}
+                                    </div>
 
-                        <div className="grid w-full items-center gap-1.5">
-                            <Label htmlFor="category_id">Kategori</Label>
-                            <Select
-                                defaultValue={data.category_id}
-                                onValueChange={(value) => setData('category_id', value)}
-                            >
-                                <SelectTrigger>
-                                    <SelectValue>
-                                        {props.page_data.categories.find(
-                                            (category) => category.value == data.category_id,
-                                        )?.label ?? 'Pilih Kategori'}
-                                    </SelectValue>
-                                </SelectTrigger>
-                                <SelectContent>
-                                    {props.page_data.categories.map((category, index) => (
-                                        <SelectItem key={index} value={category.value}>
-                                            {category.label}
-                                        </SelectItem>
-                                    ))}
-                                </SelectContent>
-                            </Select>
-                            {errors.category_id && <InputError message={errors.category_id} />}
-                        </div>
+                                    <div className="grid w-full items-center gap-1.5">
+                                        <Label htmlFor="category_id">Kategori</Label>
+                                        <Select
+                                            defaultValue={data.category_id}
+                                            onValueChange={(value) => setData('category_id', value)}
+                                        >
+                                            <SelectTrigger>
+                                                <SelectValue>
+                                                    {props.page_data.categories.find(
+                                                        (category) => category.value == data.category_id,
+                                                    )?.label ?? 'Pilih Kategori'}
+                                                </SelectValue>
+                                            </SelectTrigger>
+                                            <SelectContent>
+                                                {props.page_data.categories.map((category, index) => (
+                                                    <SelectItem key={index} value={category.value}>
+                                                        {category.label}
+                                                    </SelectItem>
+                                                ))}
+                                            </SelectContent>
+                                        </Select>
+                                        {errors.category_id && <InputError message={errors.category_id} />}
+                                    </div>
 
-                        <div className="grid w-full items-center gap-1.5">
-                            <Label htmlFor="brand_id">Brand</Label>
-                            <Select
-                                defaultValue={data.brand_id}
-                                onValueChange={(value) => setData('brand_id', value)}
-                            >
-                                <SelectTrigger>
-                                    <SelectValue>
-                                        {props.page_data.brands.find(
-                                            (brand) => brand.value == data.brand_id,
-                                        )?.label ?? 'Pilih Penerbit'}
-                                    </SelectValue>
-                                </SelectTrigger>
-                                <SelectContent>
-                                    {props.page_data.brands.map((brand, index) => (
-                                        <SelectItem key={index} value={brand.value}>
-                                            {brand.label}
-                                        </SelectItem>
-                                    ))}
-                                </SelectContent>
-                            </Select>
-                            {errors.brand_id && <InputError message={errors.brand_id} />}
-                        </div>
+                                    <div className="grid w-full items-center gap-1.5">
+                                        <Label htmlFor="brand_id">Brand</Label>
+                                        <Select
+                                            defaultValue={data.brand_id}
+                                            onValueChange={(value) => setData('brand_id', value)}
+                                        >
+                                            <SelectTrigger>
+                                                <SelectValue>
+                                                    {props.page_data.brands.find(
+                                                        (brands) => brands.value == data.brand_id,
+                                                    )?.label ?? 'Pilih Brands'}
+                                                </SelectValue>
+                                            </SelectTrigger>
+                                            <SelectContent>
+                                                {props.page_data.brands.map((brands, index) => (
+                                                    <SelectItem key={index} value={brands.value}>
+                                                        {brands.label}
+                                                    </SelectItem>
+                                                ))}
+                                            </SelectContent>
+                                        </Select>
+                                        {errors.brand_id && <InputError message={errors.brand_id} />}
+                                    </div>
 
-                        <div className="flex justify-end gap-2">
-                            <Button type="button" variant="ghost" size="lg" onClick={onHandleReset}>
-                                Reset
-                            </Button>
-                            <Button type="submit" variant="orange" size="lg">
-                                Save
-                            </Button>
-                        </div>
-                    </form>
-                </CardContent>
-            </Card>
+                                    <div className="grid w-full items-center gap-1.5">
+                                        <Label htmlFor="total">Stock</Label>
+                                        <Input
+                                            name="total"
+                                            id="total"
+                                            type="number"
+                                            placeholder="Masukkan total stok..."
+                                            min="0"
+                                            value={data.total}
+                                            onChange={onHandleChange}
+                                        />
+                                        {errors.total && <InputError message={errors.total} />}
+                                    </div>
+
+                                    <div className="flex justify-end gap-2">
+                                        <Button type="button" variant="ghost" size="lg" onClick={onHandleReset}>
+                                            Reset
+                                        </Button>
+                                        <Button type="submit" variant="orange" size="lg">
+                                            Save
+                                        </Button>
+                                    </div>
+                                </form>
+                            </CardContent>
+                        </Card>
         </div>
     );
 }

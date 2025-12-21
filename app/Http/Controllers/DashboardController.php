@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use inertia;
+use App\Models\Fine;
 use App\Models\User;
 use App\Models\Loans;
 use Inertia\Response;

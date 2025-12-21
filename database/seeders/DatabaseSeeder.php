@@ -19,21 +19,21 @@ class DatabaseSeeder extends Seeder
         User::factory()->create([
             'name' => $name = 'Roronoa Zoro',
             'username' => usernameGenerator($name),
-            'email' => 'zoro@cendekia.com',
+            'email' => 'zoro@example.com',
             'password' => bcrypt('password'),
         ])->assignRole(Role::create(['name' => 'admin']));
 
         User::factory()->create([
             'name' => $name = 'Kuroaci Sanji',
             'username' => usernameGenerator($name),
-            'email' => 'sanji@cendekia.com',
+            'email' => 'sanji@example.com',
             'password' => bcrypt('password'),
         ])->assignRole(Role::create(['name' => 'operator']));
 
         User::factory()->create([
             'name' => $name = 'Monkey D Luffy',
             'username' => usernameGenerator($name),
-            'email' => 'luffy@cendekia.com',
+            'email' => 'luffy@example.com',
             'password' => bcrypt('password'),
         ])->assignRole(Role::create(['name' => 'member']));
     }

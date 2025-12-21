@@ -15,6 +15,7 @@ import { IconBrandProducthunt,
     IconRoute,
     IconSettingsExclamation, IconStack3, IconTags,
     IconUser,
+    IconUsersGroup,
     IconVersions} from '@tabler/icons-react'
 import React from 'react'
 
@@ -81,6 +82,12 @@ export default function Sidebar({url, auth}) {
                     title="Produk"
                     icon={IconDeviceMobile}
                 />
+                <NavLink
+                        url={route('admin.users.index')}
+                        active={url.startsWith('/admin/users')}
+                        title="Pengguna"
+                        icon={IconUsersGroup}
+                    />
                 <NavLink
                     url={route('admin.fine-settings.create')}
                     active={url.startsWith('/admin/fine-settings')}

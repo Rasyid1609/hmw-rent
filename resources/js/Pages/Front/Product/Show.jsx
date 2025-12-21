@@ -44,7 +44,7 @@ export default function Show(props) {
                                     )
                                 }
                             >
-                                Pinjam Sekarang
+                                Sewa Sekarang
                             </Button>
                         ) : (
                             <Button size="lg" disabled>

@@ -16,7 +16,7 @@ class RouteAccessSeeder extends Seeder
     public function run(): void
     {
         $admin_role = Role::firstOrCreate(['name' => 'admin']);
-        $operator_role = Role::firstOrCreate(['name' => 'opertator']);
+        $operator_role = Role::firstOrCreate(['name' => 'operator']);
         $member_role = Role::firstOrCreate(['name' => 'member']);
 
         $admin_routes = collect(Route::getRoutes())->filter(function($route){

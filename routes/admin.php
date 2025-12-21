@@ -20,7 +20,7 @@ use App\Http\Controllers\Admin\AssignPermissionController;
 use App\Http\Controllers\Admin\ProductStockReportController;
 
 
-Route::middleware(['auth', 'role:admin|operator'])->prefix('admin')->group(function () {
+Route::middleware(['auth', 'role:admin|operator'])->prefix('admin')->name('admin.')->group(function () {
 
     Route::controller(LoanStatisticController::class)->group(function() {
         Route::get('loan-statistics', 'index')->name('loan-statistics.index');
