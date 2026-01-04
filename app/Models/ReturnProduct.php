@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Carbon\Carbon;
 use App\Models\Fine;
+use App\Models\Loan;
 use App\Models\User;
 use App\Models\Loans;
 use App\Models\Product;
@@ -30,9 +31,9 @@ class ReturnProduct extends Model
         'status' => ReturnProductStatus::class,
     ];
 
-    public function loans(): BelongsTo
+    public function loan(): BelongsTo
     {
-        return $this->belongsTo(Loans::class);
+        return $this->belongsTo(Loan::class);
     }
 
     public function product(): BelongsTo
@@ -64,7 +65,7 @@ class ReturnProduct extends Model
                     'status',
                 ], 'REGEXP', $search);
             })
-            ->orWhereHas('loans', fn($query) => $query->where('loan_code', 'REGEXP', $search))
+            ->orWhereHas('loan', fn($query) => $query->where('loan_code', 'REGEXP', $search))
             ->orWhereHas('user', fn($query) => $query->where('name', 'REGEXP', $search))
             ->orWhereHas('product', fn($query) => $query->where('title', 'REGEXP', $search));
         });

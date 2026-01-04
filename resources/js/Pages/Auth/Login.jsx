@@ -100,7 +100,7 @@ export default function Login({ status, canResetPassword }) {
                                     variant="orange"
                                     size="xl"
                                     className="w-full"
-                                    disable={processing}
+                                    disabled={processing}
                                 >
                                     Masuk
                                 </Button>

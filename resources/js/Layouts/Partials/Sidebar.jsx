@@ -79,7 +79,7 @@ export default function Sidebar({url, auth}) {
                 <NavLink
                     url={route('admin.products.index')}
                     active={url.startsWith('/admin/products')}
-                    title="Produk"
+                    title="Barang"
                     icon={IconDeviceMobile}
                 />
                 <NavLink
@@ -159,7 +159,7 @@ export default function Sidebar({url, auth}) {
                     <NavLink
                         url={route('front.products.index')}
                         active={url.startsWith('/products')}
-                        title="Produk"
+                        title="Barang"
                         icon={IconBrandProducthunt}
                     />
                     <NavLink

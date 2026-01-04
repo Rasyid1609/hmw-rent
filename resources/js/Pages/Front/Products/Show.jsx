@@ -56,7 +56,7 @@ export default function Show(props) {
                     <div className="mt-10 flex flex-col justify-start gap-10 border-t border-gray-200 pt-10 lg:flex-row">
                         <div>
                             <h3 className="text-sm font-medium text-foreground">Brand</h3>
-                            <p className="mt-4 text-sm text-muted-foreground">{props.product.brand.name}</p>
+                            <p className="mt-4 text-sm text-muted-foreground">{props.product?.brands?.name ?? '-'}</p>
                         </div>
                         <div>
                             <h3 className="text-sm font-medium text-foreground">Kategori</h3>
