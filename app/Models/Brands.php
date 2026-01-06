@@ -18,7 +18,7 @@ class Brands extends Model
         'logo',
     ];
 
-    public function books(): HasMany
+    public function products(): HasMany
     {
         return $this->hasMany(Product::class);
     }

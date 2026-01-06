@@ -58,7 +58,7 @@ export default function Show(props) {
                     <div className="lg-pt-0 flex pt-6 text-sm font-medium lg:items-center lg:border-none">
                         <div className="flex flex-1 justify-center">
                             <Button variant="link">
-                                <Link href={route('front.products.show', [props.loan.product.slug])}>Lihat Buku</Link>
+                                <Link href={route('front.products.show', [props.loan.product.slug])}>Lihat Barang</Link>
                             </Button>
                             {!props.loan.return_product && (
                                 <Button

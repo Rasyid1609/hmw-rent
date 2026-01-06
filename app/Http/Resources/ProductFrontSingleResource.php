@@ -28,9 +28,9 @@ class ProductFrontSingleResource extends JsonResource
                 'id' => $this->category?->id,
                 'name' => $this->category?->name,
             ]),
-            'brands' => $this->whenLoaded('brands', [
-                'id' => $this->brands?->id,
-                'name' => $this->brands?->name,
+            'brand' => $this->whenLoaded('brand', [
+                'id' => $this->brand?->id,
+                'name' => $this->brand?->name,
             ]),
             'stock' => $this->whenLoaded('stock', [
                 'available' => $this->stock?->available,

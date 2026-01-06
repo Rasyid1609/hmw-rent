@@ -25,7 +25,7 @@ class ReturnProductResource extends JsonResource
                 'id' => $this->product?->id,
                 'title' => $this->product?->title,
             ]),
-            'loans' => $this->whenLoaded('loans', [
+            'loan' => $this->whenLoaded('loan', [
                 'id' => $this->loans?->id,
                 'loan_code' => $this->loans?->loan_code,
                 'loan_date' => Carbon::parse($this->loan?->loan_date)->format('d M Y'),

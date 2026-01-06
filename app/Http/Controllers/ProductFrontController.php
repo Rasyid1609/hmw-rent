@@ -38,7 +38,7 @@ class ProductFrontController extends Controller
                 'title' => $product->title,
                 'subtitle' => "Menampilkan detail informasi barang {$product->title}",
             ],
-            'product' => new ProductFrontSingleResource($product->load(['category', 'brands', 'stock'])),
+            'product' => new ProductFrontSingleResource($product->load(['category', 'brand', 'stock'])),
         ]);
     }
 }

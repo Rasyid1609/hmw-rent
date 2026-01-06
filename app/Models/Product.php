@@ -49,7 +49,7 @@ class Product extends Model
         return $this->hasMany(Loan::class);
     }
 
-    public function brands(): BelongsTo
+    public function brand(): BelongsTo
     {
         return $this->belongsTo(Brands::class);
     }
