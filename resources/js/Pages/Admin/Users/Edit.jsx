@@ -1,19 +1,25 @@
 import HeaderTitle from '@/Components/HeaderTitle';
 import InputError from '@/Components/InputError';
 import { Button } from '@/Components/ui/button';
+import { Calendar } from '@/Components/ui/calendar';
 import { Card, CardContent } from '@/Components/ui/card';
 import { Input } from '@/Components/ui/input';
 import { Label } from '@/Components/ui/label';
+import { Popover, PopoverContent, PopoverTrigger } from '@/Components/ui/popover';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/Components/ui/select';
+import { Textarea } from '@/Components/ui/textarea';
 import AppLayout from '@/Layouts/AppLayout';
 import { flashMessage } from '@/lib/utils';
 import { Link, useForm } from '@inertiajs/react';
 import { IconArrowLeft, IconUsersGroup } from '@tabler/icons-react';
-import { useRef } from 'react';
+import { ChevronDownIcon } from 'lucide-react';
+import { useRef, useState } from 'react';
 import { toast } from 'sonner';
 
 export default function Edit(props) {
     const fileInputAvatar = useRef(null);
+    const [open, setOpen] = useState (false);
+    const [date, setDate] = useState(undefined);
 
     const { data, setData, reset, post, processing, errors } = useForm({
         name: props.user.name ?? '',
@@ -125,16 +131,44 @@ export default function Edit(props) {
                             {errors.phone && <InputError message={errors.phone} />}
                         </div>
 
+                        <div className="flex flex-col gap-3">
+                            <Label htmlFor='date_of_birth'>Tanggal Lahir</Label>
+                            <Popover open={open} onOpenChange={setOpen}>
+                                <PopoverTrigger asChild>
+                                    <Button
+                                    variant="outline"
+                                    id="date"
+                                    className="w-48 justify-between font-normal"
+                                    >
+                                    {date ? date.toLocaleDateString() : "Select date"}
+                                    <ChevronDownIcon/>
+                                    </Button>
+                                </PopoverTrigger>
+                                <PopoverContent className="w-auto overflow-hidden p-0" align="start">
+                                    <Calendar
+                                        mode="single"
+                                        selected={date}
+                                        captionLayout="dropdown"
+                                        onSelect={(date) => {
+                                        setData('date_of_birth', date.toISOString().split('T')[0]);
+                                        setDate(date);
+                                        setOpen(false);
+                                        }}
+                                    />
+                                </PopoverContent>
+                            </Popover>
+                        </div>
+
                         <div className="grid w-full items-center gap-1.5">
-                            <Label htmlFor="cover">Avatar</Label>
+                            <Label htmlFor="avatar">Avatar</Label>
                             <Input
-                                name="cover"
-                                id="cover"
+                                name="avatar"
+                                id="avatar"
                                 type="file"
                                 onChange={(e) => setData(e.target.name, e.target.files[0])}
                                 ref={fileInputAvatar}
                             />
-                            {errors.cover && <InputError message={errors.cover} />}
+                            {errors.avatar && <InputError message={errors.avatar} />}
                         </div>
                         <div className="grid w-full items-center gap-1.5">
                             <Label htmlFor="gender">Jenis Kelamin</Label>
@@ -154,6 +188,19 @@ export default function Edit(props) {
                                 </SelectContent>
                             </Select>
                             {errors.publisher_id && <InputError message={errors.publisher_id} />}
+                        </div>
+
+                         <div className="grid w-full items-center gap-1.5">
+                            <Label htmlFor="address">Alamat</Label>
+                            <Textarea
+                                name="address"
+                                id="address"
+                                type="text"
+                                placeholder="Masukkan alamat..."
+                                value={data.address}
+                                onChange={onHandleChange}
+                            />
+                            {errors.address && <InputError message={errors.address} />}
                         </div>
 
                         <div className="flex justify-end gap-2">

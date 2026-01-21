@@ -29,7 +29,7 @@ class Fine extends Model
         ];
     }
 
-    public function returnBook(): BelongsTo
+    public function returnProduct(): BelongsTo
     {
         return $this->belongsTo(ReturnProduct::class);
     }

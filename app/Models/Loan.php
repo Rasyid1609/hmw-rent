@@ -24,8 +24,8 @@ class Loan extends Model
     protected function casts(): array
     {
         return [
-            'loan_date' => 'date',
-            'due_date' => 'date',
+            'loan_date' => 'date:Y-m-d',
+            'due_date' => 'date:Y-m-d',
         ];
     }
 
@@ -49,8 +49,8 @@ class Loan extends Model
         $query->when($filters['search'] ?? null, function($query, $search){
             $query->where(function($query) use ($search){
                 $query->whereAny([
-                    'load_code',
-                    'load_date',
+                    'loan_code',
+                    'loan_date',
                     'due_date',
                 ], 'REGEXP', $search);
             });

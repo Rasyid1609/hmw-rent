@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use inertia;
+use App\Models\Loan;
 use App\Models\Loans;
 use Inertia\Response;
 use App\Models\Product;
@@ -22,7 +23,7 @@ class LoanStatisticController extends Controller
             'page_data' => [
                 'least_loan_products' => LoanStatisticResource::collection(Product::leastLoanProducts(5)),
                 'most_loan_products' => LoanStatisticResource::collection(Product::mostLoanProducts(5)),
-                 'total_loan' => Loans::totalLoanProducts(),
+                'total_loan' => Loan::totalLoanProducts(),
             ],
         ]);
     }

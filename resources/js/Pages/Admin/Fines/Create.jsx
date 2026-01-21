@@ -10,6 +10,7 @@ import { IconMoneybag } from '@tabler/icons-react';
 
 export default function Index(props) {
     console.log(props.return_product);
+
     return (
         <div className="flex w-full flex-col pb-32">
             <div className="mb-8 flex flex-col items-start justify-between gap-y-4 lg:flex-row lg:items-center">
@@ -27,7 +28,7 @@ export default function Index(props) {
                             <dl className="flex flex-col gap-x-12 gap-y-4 text-sm leading-relaxed text-foreground lg:flex-row">
                                 <div className="flex flex-col">
                                     <dt className="font-semibold">Kode Peminjaman</dt>
-                                    <dd>{props.return_product.loan.loan_code}</dd>
+                                    <dd>{props.return_product.loan?.loan_code ?? ''}</dd>
                                 </div>
                                 <div className="flex flex-col">
                                     <dt className="font-semibold">Kode Pengembalian</dt>
@@ -35,7 +36,7 @@ export default function Index(props) {
                                 </div>
                                 <div className="flex flex-col">
                                     <dt className="font-semibold">Tanggal Peminjaman</dt>
-                                    <dd>{props.return_product.loan.loan_date}</dd>
+                                    <dd>{props.return_product.loan?.loan_date ?? ''}</dd>
                                 </div>
                                 <div className="flex flex-col">
                                     <dt className="font-semibold">Batas Pengembalian</dt>
@@ -47,7 +48,7 @@ export default function Index(props) {
                                 </div>
                                 <div className="flex flex-col">
                                     <dt className="font-semibold">Total Denda</dt>
-                                    <dd>{formatToRupiah(props.return_product.fine.total_fee)}</dd>
+                                    <dd>{formatToRupiah(props.return_product.fine?.total_fee ?? '')}</dd>
                                 </div>
                             </dl>
                         </div>
@@ -65,21 +66,21 @@ export default function Index(props) {
                         </TableHeader>
                         <TableBody>
                             <TableRow>
-                                <TableCell>{props.return_product.user.name}</TableCell>
-                                <TableCell>{props.return_product.product.title}</TableCell>
+                                <TableCell>{props.return_product.user?.name ?? ''}</TableCell>
+                                <TableCell>{props.return_product.product?.title ?? ''}</TableCell>
                                 <TableCell>
-                                    {formatToRupiah(props.return_product.fine.late_fee)}
+                                    {formatToRupiah(props.return_product.fine?.late_fee ?? '')}
                                     <span className="text-red-500">{props.return_product.dayslate}</span>
                                 </TableCell>
                                 <TableCell>
-                                    {formatToRupiah(props.return_product.fine.other_fee)}
+                                    {formatToRupiah(props.return_product.fine?.other_fee ?? '')}
                                     <span className="text-red-500">
-                                        ({props.return_product.return_product_check.condition})
+                                        ({props.return_product.return_product_check?.condition ?? ''})
                                     </span>
                                 </TableCell>
-                                <TableCell>{formatToRupiah(props.return_product.fine.total_fee)}</TableCell>
+                                <TableCell>{formatToRupiah(props.return_product.fine?.total_fee ?? '')}</TableCell>
                                 <TableCell>
-                                    <GetFineStatusBadge status={props.return_product.fine.payment_status} />
+                                    <GetFineStatusBadge status={props.return_product.fine?.payment_status ?? ''} />
                                 </TableCell>
                             </TableRow>
                         </TableBody>
@@ -89,7 +90,7 @@ export default function Index(props) {
                         <Label>Catatan:</Label>
                         <Textarea
                             className="resize-none"
-                            value={props.return_product.return_product_check.notes ?? '-'}
+                            value={props.return_product.return_product_check?.notes ?? '-'}
                             disabled
                         ></Textarea>
                     </div>

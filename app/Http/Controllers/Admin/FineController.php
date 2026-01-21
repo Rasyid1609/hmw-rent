@@ -17,7 +17,7 @@ class FineController extends Controller
                 'title' => 'Denda',
                 'subtitle' => 'Selesaikan pembayaran denda terlebih dahulu.'
             ],
-            'return_product' => new ReturnFineSingleResource($returnBook->load([
+            'return_product' => new ReturnFineSingleResource($returnProduct->load([
                 'product',
                 'fine',
                 'loan',

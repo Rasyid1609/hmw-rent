@@ -21,7 +21,7 @@ class StockResource extends JsonResource
             'loan' => $this->loan,
             'lost' => $this->lost,
             'damaged' => $this->damaged,
-            'created_at' => $this->created_at->format('d M Y'),
+            'created_at' => $this->created_at?->format('d M Y'),
             'product' => [
                 'id' => $this->product?->id,
                 'title' => $this->product?->title,

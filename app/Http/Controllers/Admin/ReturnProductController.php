@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use Throwable;
+use App\Models\Fine;
 use App\Models\Loan;
 use Inertia\Response;
 use App\Enums\MessageType;
@@ -10,6 +11,8 @@ use App\Models\FineSetting;
 use Illuminate\Http\Request;
 use App\Models\ReturnProduct;
 use Illuminate\Support\Carbon;
+use App\Enums\ReturnProductStatus;
+use App\Models\ReturnProductCheck;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Enums\ReturnProductCondition;

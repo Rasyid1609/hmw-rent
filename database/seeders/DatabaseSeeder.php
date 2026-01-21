@@ -17,24 +17,24 @@ class DatabaseSeeder extends Seeder
         // User::factory(10)->create();
 
         User::factory()->create([
-            'name' => $name = 'Roronoa Zoro',
+            'name' => $name = 'Owner',
             'username' => usernameGenerator($name),
-            'email' => 'zoro@example.com',
+            'email' => 'owner@example.com',
             'password' => bcrypt('password'),
         ])->assignRole(Role::create(['name' => 'admin']));
 
         User::factory()->create([
-            'name' => $name = 'Kuroaci Sanji',
+            'name' => $name = 'Admin',
             'username' => usernameGenerator($name),
-            'email' => 'sanji@example.com',
+            'email' => 'admin@example.com',
             'password' => bcrypt('password'),
         ])->assignRole(Role::create(['name' => 'operator']));
 
         User::factory()->create([
-            'name' => $name = 'Monkey D Luffy',
+            'name' => $name = 'Accounting',
             'username' => usernameGenerator($name),
-            'email' => 'luffy@example.com',
+            'email' => 'accounting@example.com',
             'password' => bcrypt('password'),
-        ])->assignRole(Role::create(['name' => 'member']));
+        ])->assignRole(Role::create(['name' => 'accounting']));
     }
 }

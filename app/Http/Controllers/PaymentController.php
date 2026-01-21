@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Exception;
+use Throwable;
 use Midtrans\Snap;
 use Midtrans\Config;
 use Illuminate\Http\Request;
@@ -37,7 +39,7 @@ class PaymentController extends Controller
             return response()->json([
                 'snapToken' => $snapToken,
             ], 200);
-        } catch(Exception $err) {
+        } catch(Throwable $err) {
             return response()->json([
                 'error' => $err->getMessage()
             ], 500);

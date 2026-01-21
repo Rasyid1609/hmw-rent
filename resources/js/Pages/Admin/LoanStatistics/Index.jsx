@@ -60,11 +60,11 @@ export default function Index(props) {
                 </CardStat>
             </div>
 
-            <h2 className="font-semibold leading-relaxed text-foreground">Peminjaman Per Buku</h2>
+            <h2 className="font-semibold leading-relaxed text-foreground">Peminjaman Per Barang</h2>
             <div className="flex w-full flex-col justify-between gap-8 lg:flex-row">
                 <Card className="w-full lg:w-1/2">
                     <CardHeader>
-                        <CardTitle>Buku Paling Banyak Dipinjam</CardTitle>
+                        <CardTitle>Barang Paling Banyak Dipinjam</CardTitle>
                     </CardHeader>
                     <CardContent className="px-0 py-0 [&_td]:whitespace-nowrap [&_td]:px-6 [&_th]:px-6">
                         <Table className="w-full">
@@ -72,17 +72,15 @@ export default function Index(props) {
                                 <TableRow>
                                     <TableHead>#</TableHead>
                                     <TableHead>Barang</TableHead>
-                                    <TableHead>Brand</TableHead>
                                     <TableHead>Jumlah</TableHead>
                                 </TableRow>
                             </TableHeader>
                             <TableBody>
-                                {props.page_data.most_loan_products.map((most_loan_product, index) => (
+                                {props.page_data.most_loan_products.map((most_loan_products, index) => (
                                     <TableRow key={index}>
                                         <TableCell>{index + 1}</TableCell>
-                                        <TableCell>{most_loan_product.title}</TableCell>
-                                        <TableCell>{most_loan_product.author}</TableCell>
-                                        <TableCell>{most_loan_product.loans_count}</TableCell>
+                                        <TableCell>{most_loan_products.title}</TableCell>
+                                        <TableCell>{most_loan_products.loans_count}</TableCell>
                                     </TableRow>
                                 ))}
                             </TableBody>
@@ -91,25 +89,23 @@ export default function Index(props) {
                 </Card>
                 <Card className="w-full lg:w-1/2">
                     <CardHeader>
-                        <CardTitle>Buku Paling Sedikit Dipinjam</CardTitle>
+                        <CardTitle>Barang Paling Sedikit Dipinjam</CardTitle>
                     </CardHeader>
                     <CardContent className="px-0 py-0 [&_td]:whitespace-nowrap [&_td]:px-6 [&_th]:px-6">
                         <Table className="w-full">
                             <TableHeader>
                                 <TableRow>
                                     <TableHead>#</TableHead>
-                                    <TableHead>Buku</TableHead>
-                                    <TableHead>Penulis</TableHead>
+                                    <TableHead>Barang</TableHead>
                                     <TableHead>Jumlah</TableHead>
                                 </TableRow>
                             </TableHeader>
                             <TableBody>
-                                {props.page_data.least_loan_products.map((least_loan_product, index) => (
+                                {props.page_data.least_loan_products.map((least_loan_products, index) => (
                                     <TableRow key={index}>
                                         <TableCell>{index + 1}</TableCell>
-                                        <TableCell>{least_loan_product.title}</TableCell>
-                                        <TableCell>{least_loan_product.author}</TableCell>
-                                        <TableCell>{least_loan_product.loans_count}</TableCell>
+                                        <TableCell>{least_loan_products.title}</TableCell>
+                                        <TableCell>{least_loan_products.loans_count}</TableCell>
                                     </TableRow>
                                 ))}
                             </TableBody>

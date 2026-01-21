@@ -22,7 +22,7 @@ import React from 'react'
 export default function Sidebar({url, auth}) {
   return (
     <nav className="grid items-start px-2 text-sm font-semibold lg:px-4">
-        {auth.role.some((role) => ['admin', 'operator', 'member'].includes(role)) && (
+        {auth.role.some((role) => ['admin', 'operator', 'member', 'accounting'].includes(role)) && (
             <>
                 <div className="px-3 py-2 text-sm font-semibold text-foreground">
                     Dashboard
@@ -36,7 +36,7 @@ export default function Sidebar({url, auth}) {
             </>
         )}
 
-        {auth.role.some((role) => ['admin'].includes(role)) && (
+        {auth.role.some((role) => ['admin', 'accounting'].includes(role)) && (
             <>
                 <div className="px-3 py-2 text-sm font-semibold text-foreground">Statistik</div>
                 <NavLink
@@ -54,7 +54,7 @@ export default function Sidebar({url, auth}) {
                 <NavLink
                     url={route('admin.product-stock-reports.index')}
                     active={url.startsWith('/admin/product-stock-reports')}
-                    title= "Laporan Stok Produk"
+                    title= "Laporan Stok Barang"
                     icon={IconStack3}
                 />
 
@@ -109,18 +109,6 @@ export default function Sidebar({url, auth}) {
                         icon={IconCircleKey}
                     />
                     <NavLink
-                        url={route('admin.permissions.index')}
-                        active={url.startsWith('/admin/permissions')}
-                        title="Izin"
-                        icon={IconVersions}
-                    />
-                    <NavLink
-                        url={route('admin.assign-permissions.index')}
-                        active={url.startsWith('/admin/assign-permissions')}
-                        title="Tetapkan Izin"
-                        icon={IconKeyframe}
-                    />
-                    <NavLink
                         url={route('admin.assign-users.index')}
                         active={url.startsWith('/admin/assign-users')}
                         title="Tetapkan Peran"
@@ -135,7 +123,7 @@ export default function Sidebar({url, auth}) {
                 </>
             )}
 
-        {auth.role.some((role) => ['admin', 'operator'].includes(role)) && (
+        {auth.role.some((role) => ['admin', 'operator', 'accounting'].includes(role)) && (
                 <>
                     {/* Transaksi */}
                     <div className="px-3 py-2 text-sm font-semibold text-foreground">Transaksi</div>

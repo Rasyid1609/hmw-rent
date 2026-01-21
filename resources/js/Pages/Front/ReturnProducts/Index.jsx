@@ -230,14 +230,14 @@ export default function Index(props) {
                                 <TableRow key={index}>
                                     <TableCell>{index + 1 + (meta.current_page - 1) * meta.per_page}</TableCell>
                                     <TableCell>{return_product.return_product_code}</TableCell>
-                                    <TableCell>{return_product.loan.loan_code}</TableCell>
+                                    <TableCell>{return_product.loan?.loan_code ?? '-'}</TableCell>
                                     <TableCell>{return_product.product.title}</TableCell>
                                     <TableCell>{return_product.status}</TableCell>
-                                    <TableCell>{return_product.loan.loan_date}</TableCell>
-                                    <TableCell>{return_product.loan.due_date}</TableCell>
+                                    <TableCell>{return_product.loan?.loan_date ?? '-'}</TableCell>
+                                    <TableCell>{return_product.loan?.due_date ?? '-'}</TableCell>
                                     <TableCell>{return_product.return_date}</TableCell>
                                     <TableCell className="text-red-500">{formatToRupiah(return_product.fine)}</TableCell>
-                                    <TableCell>{return_product.return_product_check}</TableCell>
+                                    <TableCell>{return_product.return_product_check?.condition ?? '-'}</TableCell>
                                     <TableCell>{return_product.created_at}</TableCell>
                                     <TableCell>
                                         <div className="flex items-center gap-x-1">

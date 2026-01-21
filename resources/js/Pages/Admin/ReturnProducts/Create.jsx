@@ -18,7 +18,7 @@ export default function Create(props) {
         loan_code: props.loan.loan_code,
         due_date: props.loan.due_date,
         return_date: props.date.return_date,
-        condition: null,
+        condition: '',
         notes: '',
         _method: props.page_settings.method,
     });
@@ -87,7 +87,7 @@ export default function Create(props) {
                     <CardContent className="space-y-4">
                         <div className="grid w-full items-center gap-1.5">
                             <Label>Kode Barang</Label>
-                            <Input type="text" value={props.loan.product.product_code} disabled />
+                            <Input type="text" value={props.loan.product.prod_code} disabled />
                         </div>
                         <div className="grid w-full items-center gap-1.5">
                             <Label>Nama Barang</Label>
@@ -99,7 +99,7 @@ export default function Create(props) {
                         </div>
                         <div className="grid w-full items-center gap-1.5">
                             <Label>Brand</Label>
-                            <Input type="text" value={props.loan.product.brand.name} disabled />
+                            <Input type="text" value={props.loan.product.brands} disabled />
                         </div>
                     </CardContent>
                 </Card>

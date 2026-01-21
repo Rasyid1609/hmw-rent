@@ -108,7 +108,7 @@ class Product extends Model
         return $this->updateStock('loan', 'available');
     }
 
-    public static function leastLoanProduct($limit = 5){
+    public static function leastLoanProducts($limit = 5){
         return self::query()
             ->select(['id', 'title'])
             ->withCount('loans')
@@ -117,7 +117,7 @@ class Product extends Model
             ->get();
     }
 
-    public static function mostLoanProduct($limit = 5){
+    public static function mostLoanProducts($limit = 5){
         return self::query()
             ->select(['id', 'title'])
             ->withCount('loans')

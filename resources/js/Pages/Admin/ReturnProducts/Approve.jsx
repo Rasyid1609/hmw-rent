@@ -1,17 +1,17 @@
 import InputError from '@/Components/InputError';
 import { Button } from '@/Components/ui/button';
+import { Label } from '@/Components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/Components/ui/select';
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from '@/Components/ui/sheet';
 import { Textarea } from '@/Components/ui/textarea';
 import { flashMessage } from '@/lib/utils';
 import { useForm } from '@inertiajs/react';
 import { IconChecklist } from '@tabler/icons-react';
-import { Label } from 'recharts';
 import { toast } from 'sonner';
 
 export default function Approve({ conditions, action }) {
     const { data, setData, put, errors, processing } = useForm({
-        condition: null,
+        condition: '',
         notes: '',
         _method: 'PUT',
     });
@@ -44,7 +44,7 @@ export default function Approve({ conditions, action }) {
                 <form className="mt-6 space-y-4" onSubmit={onHandleSubmit}>
                     <div className="gap-1/5 grid w-full items-center">
                         <Label htmlFor="condition">Kondisi Barang</Label>
-                        <Select defaultValue={data.condition} onValueChange={(value) => setData('condition', value)}>
+                        <Select value={data.condition} onValueChange={(value) => setData('condition', value)}>
                             <SelectTrigger>
                                 <SelectValue>
                                     {conditions.find((condition) => condition.value == data.condition)?.label ??
@@ -62,7 +62,7 @@ export default function Approve({ conditions, action }) {
                         {errors.condition && <InputError message={errors.condition} />}
                     </div>
                     <div className="gap-1/5 grid w-full items-center">
-                        <Label htmlFor="condition">Kondisi Barang</Label>
+                        <Label htmlFor="notes">Catatan</Label>
                         <Textarea
                             name="notes"
                             id="notes"

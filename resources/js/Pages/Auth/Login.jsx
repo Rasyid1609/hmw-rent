@@ -51,7 +51,7 @@ export default function Login({ status, canResetPassword }) {
                                         name="email"
                                         value={data.email}
                                         autoComplete="username"
-                                        placeholder="zoro@cendekia.com"
+                                        placeholder="zoro@example.com"
                                         onChange={(e) => setData(e.target.name, e.target.value)}
                                     />
 

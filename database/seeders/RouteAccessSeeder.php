@@ -18,6 +18,7 @@ class RouteAccessSeeder extends Seeder
         $admin_role = Role::firstOrCreate(['name' => 'admin']);
         $operator_role = Role::firstOrCreate(['name' => 'operator']);
         $member_role = Role::firstOrCreate(['name' => 'member']);
+        $accounting_role = Role::firstOrCreate(['name' => 'accounting']);
 
         $admin_routes = collect(Route::getRoutes())->filter(function($route){
             return str_starts_with($route->getName(), 'admin.') ||
@@ -68,6 +69,27 @@ class RouteAccessSeeder extends Seeder
             RouteAccess::create([
                 'route_name' => $route->getName(),
                 'role_id' => $member_role->id,
+                'permission_id' => null,
+            ]);
+        }
+
+        $accounting_prefixes = [
+            'admin.fine-settings.',
+            'admin.loans.',
+            'admin.return-products.',
+        ];
+
+        $accounting_routes = collect(Route::getRoutes())->filter(function($route) use($accounting_prefixes){
+            return in_array($route->getName(), ['dashboard', 'profile']) ||
+                collect($accounting_prefixes)->contains(function($prefix) use($route){
+                    return str_starts_with($route->getName(), $prefix);
+                });
+        });
+
+        foreach($accounting_routes as $route){
+            RouteAccess::create([
+                'route_name' => $route->getName(),
+                'role_id' => $accounting_role->id,
                 'permission_id' => null,
             ]);
         }

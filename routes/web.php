@@ -3,6 +3,7 @@
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Application;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FineFrontController;
@@ -25,6 +26,12 @@ Route::controller(ProductFrontController::class)->middleware(['auth', 'verified'
 Route::controller(CategoryFrontController::class)->middleware(['auth', 'verified', 'dynamic.role_permission'])->group(function(){
     Route::get('categories', 'index')->name('front.categories.index');
     Route::get('categories/{category:slug}', 'show')->name('front.categories.show');
+});
+
+Route::controller(PaymentController::class)->group(function(){
+    Route::post('payments', 'create')->name('payments.create');
+    Route::post('payments/callback', 'callback')->name('payments.callback');
+    Route::get('payments/success', 'success')->name('payments.success');
 });
 
 Route::controller(LoanFrontController::class)->middleware(['auth', 'verified', 'dynamic.role_permission'])->group(function(){

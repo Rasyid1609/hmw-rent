@@ -41,7 +41,7 @@ export default function SidebarResponsive({ url, auth }) {
                     </>
                 )}
 
-                {auth.role.some((role) => ['admin'].includes(role)) && (
+                {auth.role.some((role) => ['admin', 'accounting'].includes(role)) && (
                     <>
                         {/* Nav Menu Statistik */}
                         <div className="px-3 py-2 text-sm font-semibold text-foreground">Statistik</div>
@@ -114,18 +114,6 @@ export default function SidebarResponsive({ url, auth }) {
                             icon={IconCircleKey}
                         />
                         <NavlinkResponsive
-                            url={route('admin.permissions.index')}
-                            active={url.startsWith('/admin/permissions')}
-                            title="Izin"
-                            icon={IconVersions}
-                        />
-                        <NavlinkResponsive
-                            url={route('admin.assign-permissions.index')}
-                            active={url.startsWith('/admin/assign-permissions')}
-                            title="Tetapkan Izin"
-                            icon={IconKeyframe}
-                        />
-                        <NavlinkResponsive
                             url={route('admin.assign-users.index')}
                             active={url.startsWith('/admin/assign-users')}
                             title="Tetapkan Peran"
@@ -140,7 +128,7 @@ export default function SidebarResponsive({ url, auth }) {
                     </>
                 )}
 
-                {auth.role.some((role) => ['admin', 'operator'].includes(role)) && (
+                {auth.role.some((role) => ['admin', 'operator', 'accounting'].includes(role)) && (
                     <>
                         {/* Transaksi */}
                         <div className="px-3 py-2 text-sm font-semibold text-foreground">Transaksi</div>

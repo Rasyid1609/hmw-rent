@@ -7,7 +7,7 @@ use App\Enums\ReturnProductCondition;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class ReturnProductChecks extends Model
+class ReturnProductCheck extends Model
 {
     protected $fillable = [
         'return_product_id',

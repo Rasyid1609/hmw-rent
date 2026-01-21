@@ -9,11 +9,12 @@ use App\Models\User;
 use App\Models\Loans;
 use App\Models\Product;
 use App\Enums\ReturnProductStatus;
-use App\Models\ReturnProductChecks;
+use App\Models\ReturnProductCheck;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class ReturnProduct extends Model
 {
@@ -53,7 +54,7 @@ class ReturnProduct extends Model
 
     public function returnProductCheck(): HasOne
     {
-        return $this->hasOne(ReturnProductChecks::class);
+        return $this->hasOne(ReturnProductCheck::class);
     }
 
     public function scopeFilter(Builder $query, array $filters): void
@@ -103,11 +104,11 @@ class ReturnProduct extends Model
 
     public function isOnTime(): bool
     {
-        return Carbon::today()->lessThanOrEqualTo(Carbon::parse($this->loans->due_date));
+        return Carbon::today()->lessThanOrEqualTo(Carbon::parse($this->loan->due_date));
     }
 
     public function getDaysLate(): int
     {
-        return max(0, Carbon::parse($this->loans->loan_date)->diffInDays(Carbon::parse($this->return_date)));
+        return max(0, Carbon::parse($this->loan->loan_date)->diffInDays(Carbon::parse($this->return_date)));
     }
 }
